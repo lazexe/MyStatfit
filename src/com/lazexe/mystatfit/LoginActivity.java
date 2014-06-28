@@ -52,6 +52,15 @@ public class LoginActivity extends Activity {
 		passEditText = (EditText) findViewById(R.id.pass);
 		newRegisterButton = (Button) findViewById(R.id.new_register_button);
 		newRegisterButton.setOnClickListener(handler);
+		
+		SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+		String login = prefs.getString(getString(R.string.login), null);
+		String password = prefs.getString(getString(R.string.password), null);
+		
+		if (login != null && password != null) {
+			LoginTask loginTask = new LoginTask(login, password);
+			loginTask.execute();
+		}
 	}
 
 	class ActivityButtonHandler implements View.OnClickListener {
@@ -65,7 +74,7 @@ public class LoginActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			if (v.getId() == R.id.login_button) {
-				LoginTask loginTask = new LoginTask();
+				LoginTask loginTask = new LoginTask(loginEditText.getText().toString(), passEditText.getText().toString());
 				loginTask.execute();
 			}
 			if (v.getId() == R.id.new_register_button) {
@@ -78,6 +87,14 @@ public class LoginActivity extends Activity {
 	}
 
 	class LoginTask extends AsyncTask<Void, Void, Void> {
+		
+		private String login;
+		private String password;
+		
+		public LoginTask(String login, String password) {
+			this.login = login;
+			this.password = password;
+		}
 
 		@Override
 		protected Void doInBackground(Void... params) {
@@ -98,8 +115,6 @@ public class LoginActivity extends Activity {
 			envelope.env = SoapSerializationEnvelope.ENV;
 			envelope.implicitTypes = true;
 			SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-			final String login = loginEditText.getText().toString();
-			final String password = passEditText.getText().toString();
 			request.addProperty("user", login);
 			request.addProperty("password", password);
 			envelope.setOutputSoapObject(request);
