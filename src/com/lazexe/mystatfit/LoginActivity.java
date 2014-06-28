@@ -78,9 +78,9 @@ public class LoginActivity extends Activity {
 				loginTask.execute();
 			}
 			if (v.getId() == R.id.new_register_button) {
-				Intent registerActivityIntent = new Intent(context,
-						RegistrationActivity.class);
-				startActivity(registerActivityIntent);
+				Intent licenceActivityIntent = new Intent(context,
+						LicenceAgreementActivity.class);
+				startActivity(licenceActivityIntent);
 			}
 		}
 

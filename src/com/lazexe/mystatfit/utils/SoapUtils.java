@@ -14,9 +14,6 @@ public class SoapUtils {
 			if (result.getProperty(i) instanceof SoapObject) {
 				ScanSoapObject((SoapObject) result.getProperty(i));
 			} else {
-				// do something with the current property
-
-				// get the current property name:
 				PropertyInfo pi = new PropertyInfo();
 				result.getPropertyInfo(i, pi);
 				String name = pi.getName();

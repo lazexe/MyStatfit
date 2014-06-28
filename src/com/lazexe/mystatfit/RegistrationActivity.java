@@ -118,6 +118,15 @@ public class RegistrationActivity extends Activity implements OnClickListener {
 
 		return isCorrect;
 	}
+	
+	@Override
+	public void onBackPressed() {
+		this.finish();
+		Intent licenteActivityIntent = new Intent(this, LicenceAgreementActivity.class);
+		startActivity(licenteActivityIntent);
+	}
+
+
 
 	class RegisterTask extends AsyncTask<Void, Void, Void> {
 

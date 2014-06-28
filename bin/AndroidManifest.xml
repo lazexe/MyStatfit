@@ -24,9 +24,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.lazexe.mystatfit.LicenceAgreementActivity" />
+        <activity
             android:name="com.lazexe.mystatfit.RegistrationActivity" />
         <activity
             android:name="com.lazexe.mystatfit.MainActivity" />
+        <activity 
+            android:name="com.lazexe.mystatfit.PrefsActivity" />
     </application>
 
 </manifest>

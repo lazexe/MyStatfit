@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">MyStatfit</string>
+    <string name="app_version">0.1.0</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="login">Login</string>
@@ -18,6 +19,18 @@
     <string name="error_password_mismatch">The passwords are not idential</string>
     <string name="exit">Exit</string>
     <string name="sure_exit">Sure want to exit?</string>
+    <string name="disagree">Disagree</string>
+    <string name="agree">Agree</string>
+    <string name="preferences">Preferences</string>
+    <string name="information">Information</string>
+    <string name="developer">Developer</string>
+    <string name="maxim_lazarenko">Maxim Lazarenko</string>
+    <string name="support">Support</string>
+    <string name="lazexe_email_address">lazexek21@gmail.com</string>
+    <string name="version">Version</string>
+    <string name="account">Account</string>
+    <string name="logout_description">Logout from account</string>
+    <string name="logout">Logout</string>
     
     <string-array name="navigation_drawer_items">
         <item>First</item>

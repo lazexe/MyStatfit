@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    
+    <PreferenceCategory
+        android:title="@string/account">
+        
+        <Preference 
+            android:title="@string/logout"
+            android:summary="@string/logout_description"/>
+        
+    </PreferenceCategory>
+    
+    <PreferenceCategory
+        android:title="@string/information">
+        
+        
+        <Preference 
+            android:title="@string/developer"
+            android:summary="@string/maxim_lazarenko"/>
+        
+        <Preference 
+            android:title="@string/support"
+            android:summary="@string/lazexe_email_address"/>
+        
+        <Preference 
+            android:title="@string/version"
+            android:summary="@string/app_version"/>
+        
+    </PreferenceCategory>
+        
+
+</PreferenceScreen>
