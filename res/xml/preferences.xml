@@ -6,6 +6,7 @@
         android:title="@string/account">
         
         <Preference 
+            android:key="@string/logout"
             android:title="@string/logout"
             android:summary="@string/logout_description"/>
         

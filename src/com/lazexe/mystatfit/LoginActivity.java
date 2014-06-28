@@ -53,7 +53,7 @@ public class LoginActivity extends Activity {
 		newRegisterButton = (Button) findViewById(R.id.new_register_button);
 		newRegisterButton.setOnClickListener(handler);
 		
-		SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+		SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
 		String login = prefs.getString(getString(R.string.login), null);
 		String password = prefs.getString(getString(R.string.password), null);
 		
@@ -140,7 +140,7 @@ public class LoginActivity extends Activity {
 						public void run() {
 							loginButton.setEnabled(true);
 							activity.finish();
-							SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+							SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
 							Editor editor = prefs.edit();
 							editor.putString(getString(R.string.login), login);
 							editor.putString(getString(R.string.password),
