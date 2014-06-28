@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MyStatfit</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="result">Result</string>
+    <string name="wrong_login_or_pass">Wrong login or password</string>
+    <string name="registration">Registration</string>
+    <string name="password_confirm">Confirm password</string>
+    <string name="email">Email</string>
+    <string name="error_dog">\@ not found</string>
+    <string name="error_length">To short email</string>
+    <string name="error_email">Wrong email</string>
+    <string name="error_password_length">Too short password</string>
+    <string name="error_password_mismatch">The passwords are not idential</string>
+    <string name="exit">Exit</string>
+    <string name="sure_exit">Sure want to exit?</string>
+    
+    <string-array name="navigation_drawer_items">
+        <item>First</item>
+        <item>Second</item>
+        <item>Third</item>
+    </string-array>
+
+</resources>
