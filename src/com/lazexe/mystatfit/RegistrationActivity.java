@@ -185,6 +185,9 @@ public class RegistrationActivity extends Activity implements OnClickListener {
 									password);
 							editor.commit();
 							Toast.makeText(activity, "Register ok", Toast.LENGTH_LONG).show();
+							activity.finish();
+							Intent editUserActivityIntent = new Intent(activity, EditUserInformationActivity.class);
+							startActivity(editUserActivityIntent);
 						}
 					});
 //					SoapObject resultsRequestSOAP = (SoapObject) envelope.bodyIn;

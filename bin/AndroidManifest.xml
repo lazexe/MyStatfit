@@ -31,6 +31,8 @@
             android:name="com.lazexe.mystatfit.MainActivity" />
         <activity 
             android:name="com.lazexe.mystatfit.PrefsActivity" />
+        <activity
+            android:name="com.lazexe.mystatfit.EditUserInformationActivity" />
     </application>
 
 </manifest>
