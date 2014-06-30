@@ -139,7 +139,7 @@ public class MainActivity extends Activity {
 		if (item.getItemId() == ID_PREFERENCES) {
 			Intent preferencesActivityIntent = new Intent(this,
 					PrefsActivity.class);
-			startActivity(preferencesActivityIntent);
+			startActivityForResult(preferencesActivityIntent, 11);
 		}
 
 		if (item.getItemId() == ID_EXIT) {
@@ -148,5 +148,14 @@ public class MainActivity extends Activity {
 
 		return super.onOptionsItemSelected(item);
 	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK) {
+			this.finish();
+		}
+	}
+	
+	
 
 }

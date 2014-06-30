@@ -30,6 +30,7 @@ public class PrefsActivity extends PreferenceActivity implements OnPreferenceCli
 		if (key.equals(getString(R.string.logout))) {
 			SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
 			prefs.edit().clear().commit();
+			setResult(RESULT_OK);
 			this.finish();
 			Intent loginActivityIntent = new Intent(this, LoginActivity.class);
 			startActivity(loginActivityIntent);
@@ -37,6 +38,8 @@ public class PrefsActivity extends PreferenceActivity implements OnPreferenceCli
 		
 		return false;
 	}
+	
+	
 	
 	
 
