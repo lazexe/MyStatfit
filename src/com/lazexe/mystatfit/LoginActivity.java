@@ -1,39 +1,30 @@
 package com.lazexe.mystatfit;
 
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.SoapFault;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpTransportSE;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.lazexe.mystatfit.utils.SoapUtils;
+import com.lazexe.mystatfit.soap.Loginner;
+import com.lazexe.mystatfit.soap.SoapEngine;
+import com.lazexe.mystatfit.soap.SoapParams;
+import com.lazexe.mystatfit.utils.Constants;
 
 public class LoginActivity extends Activity {
 
 	private static final String TAG = LoginActivity.class.getName();
 
-	private static final String SOAP_ACTION = "http://mystatfit.com/CheckAuthorization"; // 100%
-	private static final String METHOD_NAME = "CheckAuthorization"; // 100%
-	private static final String NAMESPACE = "http://mystatfit.com/"; // 100%
-	private static final String URL = "http://mystatfit.com/aut/"; // 100%
+	private SoapEngine engine;
 
 	private EditText loginEditText;
 	private EditText passEditText;
-	private Button loginButton;
+	public Button loginButton;
 	private Button newRegisterButton;
-	private Activity activity;
+	private LoginActivity activity;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +34,7 @@ public class LoginActivity extends Activity {
 	}
 
 	private void initComponents() {
+		engine = SoapEngine.getInstance();
 		activity = this;
 		ActivityButtonHandler handler = new ActivityButtonHandler(this);
 
@@ -52,14 +44,16 @@ public class LoginActivity extends Activity {
 		passEditText = (EditText) findViewById(R.id.pass);
 		newRegisterButton = (Button) findViewById(R.id.new_register_button);
 		newRegisterButton.setOnClickListener(handler);
-		
-		SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
+
+		SharedPreferences prefs = getSharedPreferences(
+				Constants.PREFS_USER_DATA_KEY, MODE_PRIVATE);
 		String login = prefs.getString(getString(R.string.login), null);
 		String password = prefs.getString(getString(R.string.password), null);
-		
+
 		if (login != null && password != null) {
-			LoginTask loginTask = new LoginTask(login, password);
-			loginTask.execute();
+			SoapParams params = new SoapParams(Loginner.SOAP_ACTION,
+					Loginner.METHOD_NAME, Loginner.NAMESPACE, Loginner.URL);
+			engine.runCommand(new Loginner(params, activity, login, password));
 		}
 	}
 
@@ -74,8 +68,11 @@ public class LoginActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			if (v.getId() == R.id.login_button) {
-				LoginTask loginTask = new LoginTask(loginEditText.getText().toString(), passEditText.getText().toString());
-				loginTask.execute();
+				SoapParams params = new SoapParams(Loginner.SOAP_ACTION,
+						Loginner.METHOD_NAME, Loginner.NAMESPACE, Loginner.URL);
+				engine.runCommand(new Loginner(params, activity, loginEditText
+						.getText().toString(), passEditText.getText()
+						.toString()));
 			}
 			if (v.getId() == R.id.new_register_button) {
 				Intent licenceActivityIntent = new Intent(context,
@@ -86,79 +83,8 @@ public class LoginActivity extends Activity {
 
 	}
 
-	class LoginTask extends AsyncTask<Void, Void, Void> {
-		
-		private String login;
-		private String password;
-		
-		public LoginTask(String login, String password) {
-			this.login = login;
-			this.password = password;
-		}
-
-		@Override
-		protected Void doInBackground(Void... params) {
-			activity.runOnUiThread(new Runnable() {
-
-				@Override
-				public void run() {
-					loginButton.setEnabled(false);
-				}
-			});
-			SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
-					SoapEnvelope.VER11);
-			envelope.dotNet = false;
-			envelope.xsd = SoapSerializationEnvelope.XSD;
-			envelope.enc = SoapSerializationEnvelope.ENC;
-			envelope.setAddAdornments(false);
-			envelope.encodingStyle = SoapSerializationEnvelope.ENC;
-			envelope.env = SoapSerializationEnvelope.ENV;
-			envelope.implicitTypes = true;
-			SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-			request.addProperty("user", login);
-			request.addProperty("password", password);
-			envelope.setOutputSoapObject(request);
-			HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
-			androidHttpTransport.debug = true;
-			try {
-				androidHttpTransport.call(SOAP_ACTION, envelope);
-				if (envelope.bodyIn instanceof SoapFault) {
-					final SoapFault soapFault = (SoapFault) envelope.bodyIn;
-					activity.runOnUiThread(new Runnable() {
-
-						@Override
-						public void run() {
-							Toast.makeText(activity, soapFault.faultstring,
-									Toast.LENGTH_LONG).show();
-							loginButton.setEnabled(true);
-						}
-					});
-				} else {
-					activity.runOnUiThread(new Runnable() {
-
-						@Override
-						public void run() {
-							loginButton.setEnabled(true);
-							activity.finish();
-							SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
-							Editor editor = prefs.edit();
-							editor.putString(getString(R.string.login), login);
-							editor.putString(getString(R.string.password),
-									password);
-							editor.commit();
-						}
-					});
-					SoapObject resultsRequestSOAP = (SoapObject) envelope.bodyIn;
-					SoapUtils.ScanSoapObject(resultsRequestSOAP);
-					Intent intent = new Intent(activity, MainActivity.class);
-					startActivity(intent);
-				}
-			} catch (Exception exception) {
-				exception.printStackTrace();
-			}
-			return null;
-		}
-
+	public Button getLoginButton() {
+		return loginButton;
 	}
 
 }
