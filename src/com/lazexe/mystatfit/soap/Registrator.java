@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.lazexe.mystatfit.EditUserInformationActivity;
 import com.lazexe.mystatfit.R;
 import com.lazexe.mystatfit.RegistrationActivity;
+import com.lazexe.mystatfit.utils.Constants;
 
 public class Registrator extends AbstractCommandObject implements
 		SoapExecutableInterface {
@@ -71,7 +72,9 @@ public class Registrator extends AbstractCommandObject implements
 								.setEnabled(true);
 						registrationActivity.finish();
 						SharedPreferences prefs = registrationActivity
-								.getPreferences(Context.MODE_PRIVATE);
+								.getSharedPreferences(
+										Constants.PREFS_USER_DATA_KEY,
+										Context.MODE_PRIVATE);
 						Editor editor = prefs.edit();
 						editor.putString(
 								registrationActivity.getString(R.string.login),

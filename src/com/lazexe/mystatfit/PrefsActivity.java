@@ -1,5 +1,7 @@
 package com.lazexe.mystatfit;
 
+import com.lazexe.mystatfit.utils.PreferencesUtils;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,6 +20,11 @@ public class PrefsActivity extends PreferenceActivity implements OnPreferenceCli
 		addPreferencesFromResource(R.xml.preferences);
 		
 		Preference logoutPreference = findPreference(getString(R.string.logout));
+		StringBuilder sBuilder = new StringBuilder(getString(R.string.logout));
+		sBuilder.append(" (");
+		sBuilder.append(PreferencesUtils.getUserLogin(this));
+		sBuilder.append(")");
+		logoutPreference.setTitle(sBuilder.toString());
 		logoutPreference.setOnPreferenceClickListener(this);
 		
 	}
