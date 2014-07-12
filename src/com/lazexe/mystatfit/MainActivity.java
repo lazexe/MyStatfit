@@ -1,14 +1,23 @@
 package com.lazexe.mystatfit;
 
+import java.util.ArrayList;
+
+import com.lazexe.mystatfit.spinnernavigation.SpinnerNavigationItem;
+import com.lazexe.mystatfit.spinnernavigation.TitleNavigationAdapter;
+
+import android.app.ActionBar;
+import android.app.ActionBar.OnNavigationListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.wifi.p2p.WifiP2pManager.ActionListener;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,13 +25,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnNavigationListener {
+
+	private static final String TAG = MainActivity.class.getName();
 
 	private static int ID_PREFERENCES = 1010;
 	private static int ID_EXIT = 1011;
 
-	private Activity activity;
+	private MainActivity activity;
 
 	private DrawerLayout drawerLayout;
 	private ListView drawerList;
@@ -56,6 +68,7 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onDrawerOpened(View drawerView) {
+				getActionBar().setTitle("");
 				invalidateOptionsMenu();
 			}
 
@@ -65,34 +78,62 @@ public class MainActivity extends Activity {
 			}
 
 		};
-		
+
 		drawerLayout.setDrawerListener(drawerToggle);
 	}
-	
-    @Override
-    public void setTitle(CharSequence title) {
-        if (getActionBar() != null)
-            getActionBar().setTitle(title);
-    }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        drawerToggle.syncState();
-    }
+	@Override
+	public void setTitle(CharSequence title) {
+		if (getActionBar() != null)
+			getActionBar().setTitle(title);
+	}
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        drawerToggle.onConfigurationChanged(newConfig);
-    }
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		drawerToggle.syncState();
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		drawerToggle.onConfigurationChanged(newConfig);
+	}
 
 	private class DrawerItemClickListener implements
 			ListView.OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-			// TODO
+			drawerList.setItemChecked(position, true);
+			drawerLayout.closeDrawer(drawerList);
+			String[] titles = getResources().getStringArray(
+					R.array.navigation_drawer_items);
+			String newTitle = titles[position];
+			getActionBar().setTitle(newTitle);
+
+			switch (position) {
+			case 0: // Trainings
+				getActionBar().setDisplayShowTitleEnabled(false);
+				getActionBar()
+						.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+				ArrayList<SpinnerNavigationItem> items = new ArrayList<SpinnerNavigationItem>();
+				items.add(new SpinnerNavigationItem("Run",
+						R.drawable.ic_launcher));
+				items.add(new SpinnerNavigationItem("Jump",
+						R.drawable.ic_launcher));
+				items.add(new SpinnerNavigationItem("Other",
+						R.drawable.ic_launcher));
+				TitleNavigationAdapter adapter = new TitleNavigationAdapter(
+						activity, items);
+				getActionBar().setListNavigationCallbacks(adapter, activity);
+				break;
+
+			default:
+				getActionBar().setNavigationMode(
+						ActionBar.NAVIGATION_MODE_STANDARD);
+				break;
+			}
 		}
 	}
 
@@ -135,7 +176,7 @@ public class MainActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		
+
 		if (drawerToggle.onOptionsItemSelected(item))
 			return true;
 
@@ -158,7 +199,11 @@ public class MainActivity extends Activity {
 			this.finish();
 		}
 	}
-	
-	
+
+	@Override
+	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }

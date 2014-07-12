@@ -46,22 +46,22 @@ public class EditUserInformationActivity extends Activity implements
 				engine = SoapEngine.getInstance();
 				SoapParams params = new SoapParams(Editor.SOAP_ACTION,
 						Editor.METHOD_NAME, Editor.NAMESPACE, Editor.URL);
-				engine.runCommand(new Editor(params, this, nameEditText
-						.getText().toString(), lastNameEditText.getText()
-						.toString(), secondNameEditText.getText().toString(),
-						newLoginEditText.getText().toString(), genderSpinner
-								.getSelectedItem().toString(), birthEditText
-								.getText().toString()));
+				engine.runCommand(new Editor(params, this, 
+						nameEditText.getText().toString(), 
+						lastNameEditText.getText().toString(), 
+						secondNameEditText.getText().toString(),
+						newLoginEditText.getText().toString(), 
+						genderSpinner.getSelectedItem().toString(), 
+						birthEditText.getText().toString()));
 			}
-
 		}
 	}
 
 	private boolean checkFields() {
 		boolean isCorrect = true;
-		
+
 		// TODO
-		
+
 		return isCorrect;
 	}
 

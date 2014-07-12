@@ -9,8 +9,9 @@ package com.lazexe.mystatfit;
 
 public final class R {
     public static final class array {
-        public static final int gender_type=0x7f060001;
+        public static final int gender_type=0x7f060002;
         public static final int navigation_drawer_items=0x7f060000;
+        public static final int training_type=0x7f060001;
     }
     public static final class attr {
     }
@@ -31,6 +32,7 @@ public final class R {
         public static final int edit_newlogin=0x7f080000;
         public static final int edit_parent_name=0x7f080003;
         public static final int edit_surname=0x7f080001;
+        public static final int imgIcon=0x7f080014;
         public static final int left_drawer=0x7f08000f;
         public static final int licence_agree_button=0x7f080008;
         public static final int licence_disagree_button=0x7f080007;
@@ -41,6 +43,7 @@ public final class R {
         public static final int reg_email=0x7f080010;
         public static final int reg_pass=0x7f080011;
         public static final int reg_pass_confirm=0x7f080012;
+        public static final int txtTitle=0x7f080015;
     }
     public static final class layout {
         public static final int activity_edit_user=0x7f030000;
@@ -49,6 +52,7 @@ public final class R {
         public static final int activity_main=0x7f030003;
         public static final int activity_registration=0x7f030004;
         public static final int drawet_list_item=0x7f030005;
+        public static final int list_item_title_navigation=0x7f030006;
     }
     public static final class string {
         public static final int accept=0x7f050025;
