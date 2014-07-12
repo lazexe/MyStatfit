@@ -2,12 +2,15 @@ package com.lazexe.mystatfit.soap;
 
 import org.ksoap2.SoapFault;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.lazexe.mystatfit.EditUserInformationActivity;
 import com.lazexe.mystatfit.MainActivity;
+import com.lazexe.mystatfit.utils.Constants;
 import com.lazexe.mystatfit.utils.PreferencesUtils;
 
 public class Editor extends AbstractCommandObject implements
@@ -57,7 +60,7 @@ public class Editor extends AbstractCommandObject implements
 		this.secondName = secondName;
 		this.newLogin = newLogin;
 		this.gender = String.valueOf(gender.charAt(0));
-		String[] temp = birth.split(".");
+		String[] temp = birth.split("\\.");
 		Log.d(TAG, birth);
 		Log.d(TAG, String.valueOf(temp.length));
 		this.day = temp[0];
@@ -91,7 +94,9 @@ public class Editor extends AbstractCommandObject implements
 				});
 			} else {
 				activity.finish();
-				Toast.makeText(activity, "Edit ok", Toast.LENGTH_LONG).show();
+				SharedPreferences prefs = activity.getSharedPreferences(Constants.PREFS_USER_DATA_KEY, Context.MODE_PRIVATE);
+				prefs.edit().putString("Login", newLogin).commit();
+				Log.d(TAG, "Edit OK");
 				Intent mainActivityIntent = new Intent(activity, MainActivity.class);
 				activity.startActivity(mainActivityIntent);
 			}
