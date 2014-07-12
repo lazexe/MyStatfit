@@ -135,6 +135,9 @@ public class MainActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		
+		if (drawerToggle.onOptionsItemSelected(item))
+			return true;
 
 		if (item.getItemId() == ID_PREFERENCES) {
 			Intent preferencesActivityIntent = new Intent(this,
