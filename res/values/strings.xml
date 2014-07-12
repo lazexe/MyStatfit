@@ -17,6 +17,7 @@
     <string name="error_email">Wrong email</string>
     <string name="error_password_length">Too short password</string>
     <string name="error_password_mismatch">The passwords are not idential</string>
+    <string name="error_whitespace">There is a whitespace</string>
     <string name="exit">Exit</string>
     <string name="sure_exit">Sure want to exit?</string>
     <string name="disagree">Disagree</string>

@@ -72,6 +72,13 @@ public class RegistrationActivity extends Activity implements OnClickListener {
 			emailEditText.requestFocus();
 			return isCorrect;
 		}
+		
+		if (email.contains(" ")) {
+			isCorrect = false;
+			emailEditText.setError(getString(R.string.error_whitespace));
+			emailEditText.requestFocus();
+			return isCorrect;
+		}
 
 		if (email.length() < 6) {
 			isCorrect = false;
