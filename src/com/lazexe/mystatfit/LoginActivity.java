@@ -47,8 +47,8 @@ public class LoginActivity extends Activity {
 
 		SharedPreferences prefs = getSharedPreferences(
 				Constants.PREFS_USER_DATA_KEY, MODE_PRIVATE);
-		String login = prefs.getString(getString(R.string.login), null);
-		String password = prefs.getString(getString(R.string.password), null);
+		String login = prefs.getString("Login", null);
+		String password = prefs.getString("Password", null);
 
 		if (login != null && password != null) {
 			SoapParams params = new SoapParams(Loginner.SOAP_ACTION,

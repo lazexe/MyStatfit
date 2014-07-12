@@ -19,9 +19,10 @@ import android.widget.Spinner;
 public class EditUserInformationActivity extends Activity implements
 		OnClickListener, OnFocusChangeListener {
 
-	private EditText surnameEditText;
-	private EditText nameEditText;
-	private EditText parentNameEditText;
+	private EditText lastNameEditText; // ot4
+	private EditText nameEditText; // name
+	private EditText secondNameEditText; // parent name
+	private EditText newLoginEditText;
 	private EditText birthEditText;
 	private Spinner genderSpinner;
 	private Button acceptButton;
@@ -41,12 +42,24 @@ public class EditUserInformationActivity extends Activity implements
 			handleBirthEditText();
 		}
 		if (view.getId() == R.id.accept_edit_button) {
-			// TODO handle click
-			engine = SoapEngine.getInstance();
-			SoapParams params = new SoapParams(Editor.SOAP_ACTION,
-					Editor.METHOD_NAME, Editor.NAMESPACE, Editor.URL);
-			engine.runCommand(new Editor(params));
+			if (checkFields()) {
+				engine = SoapEngine.getInstance();
+				SoapParams params = new SoapParams(Editor.SOAP_ACTION,
+						Editor.METHOD_NAME, Editor.NAMESPACE, Editor.URL);
+				engine.runCommand(new Editor(params, this, nameEditText.getText()
+						.toString(), lastNameEditText.getText().toString(),
+						secondNameEditText.getText().toString(), newLoginEditText
+								.getText().toString(), genderSpinner
+								.getSelectedItem().toString(), birthEditText
+								.getText().toString()));
+			}
+			
 		}
+	}
+	
+	private boolean checkFields() {
+		// TODO
+		return true;
 	}
 
 	@Override
@@ -65,8 +78,7 @@ public class EditUserInformationActivity extends Activity implements
 					@Override
 					public void onDateSet(DatePicker datePicker, int year,
 							int monthOfYear, int dayOfMonth) {
-						birthDate = new Date(dayOfMonth, monthOfYear + 1,
-								year);
+						birthDate = new Date(dayOfMonth, monthOfYear + 1, year);
 						birthEditText.setText(birthDate.toString());
 					}
 				}, 1990, 1, 1);
@@ -74,9 +86,9 @@ public class EditUserInformationActivity extends Activity implements
 	}
 
 	private void initControls() {
-		surnameEditText = (EditText) findViewById(R.id.edit_surname);
+		lastNameEditText = (EditText) findViewById(R.id.edit_surname);
 		nameEditText = (EditText) findViewById(R.id.edit_name);
-		parentNameEditText = (EditText) findViewById(R.id.edit_parent_name);
+		secondNameEditText = (EditText) findViewById(R.id.edit_parent_name);
 		birthEditText = (EditText) findViewById(R.id.edit_birthday);
 		birthEditText.setOnFocusChangeListener(this);
 		birthEditText.setOnClickListener(this);
@@ -84,6 +96,7 @@ public class EditUserInformationActivity extends Activity implements
 		genderSpinner.setSelection(0);
 		acceptButton = (Button) findViewById(R.id.accept_edit_button);
 		acceptButton.setOnClickListener(this);
+		newLoginEditText = (EditText) findViewById(R.id.edit_newlogin);
 	}
 
 }
