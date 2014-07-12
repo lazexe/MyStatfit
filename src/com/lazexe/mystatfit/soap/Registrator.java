@@ -98,4 +98,9 @@ public class Registrator extends AbstractCommandObject implements
 		}
 	}
 
+	@Override
+	public Context getContext() {
+		return registrationActivity.getApplicationContext();
+	}
+
 }

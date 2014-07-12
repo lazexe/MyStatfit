@@ -88,4 +88,9 @@ public class Loginner extends AbstractCommandObject implements SoapExecutableInt
 		}
 	}
 
+	@Override
+	public Context getContext() {
+		return loginActivity.getApplicationContext();
+	}
+
 }

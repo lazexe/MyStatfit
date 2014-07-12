@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.lazexe.mystatfit.soap.Loginner;
 import com.lazexe.mystatfit.soap.SoapEngine;
@@ -44,7 +45,7 @@ public class LoginActivity extends Activity {
 		passEditText = (EditText) findViewById(R.id.pass);
 		newRegisterButton = (Button) findViewById(R.id.new_register_button);
 		newRegisterButton.setOnClickListener(handler);
-
+		
 		SharedPreferences prefs = getSharedPreferences(
 				Constants.PREFS_USER_DATA_KEY, MODE_PRIVATE);
 		String login = prefs.getString("Login", null);

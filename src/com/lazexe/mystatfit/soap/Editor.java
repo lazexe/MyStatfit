@@ -105,4 +105,9 @@ public class Editor extends AbstractCommandObject implements
 		}
 	}
 
+	@Override
+	public Context getContext() {
+		return activity.getApplicationContext();
+	}
+
 }
