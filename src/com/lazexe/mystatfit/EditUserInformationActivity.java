@@ -1,5 +1,6 @@
 package com.lazexe.mystatfit;
 
+import com.lazexe.mystatfit.progress.ProgressShowable;
 import com.lazexe.mystatfit.soap.Editor;
 import com.lazexe.mystatfit.soap.SoapEngine;
 import com.lazexe.mystatfit.soap.SoapParams;
@@ -14,10 +15,11 @@ import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 public class EditUserInformationActivity extends Activity implements
-		OnClickListener, OnFocusChangeListener {
+		OnClickListener, OnFocusChangeListener, ProgressShowable {
 
 	private EditText lastNameEditText; // ot4
 	private EditText nameEditText; // name
@@ -28,6 +30,8 @@ public class EditUserInformationActivity extends Activity implements
 	private Button acceptButton;
 	private Date birthDate;
 	private SoapEngine engine;
+	
+	private ProgressBar progressBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +104,32 @@ public class EditUserInformationActivity extends Activity implements
 		acceptButton = (Button) findViewById(R.id.accept_edit_button);
 		acceptButton.setOnClickListener(this);
 		newLoginEditText = (EditText) findViewById(R.id.edit_newlogin);
+		progressBar = (ProgressBar) findViewById(R.id.edit_progressbar);
+		progressBar.setVisibility(View.INVISIBLE);
+	}
+
+	@Override
+	public void showProgress() {
+		setControlsEnabled(false);
+	}
+
+	@Override
+	public void hideProgress() {
+		setControlsEnabled(true);
+	}
+	
+	private void setControlsEnabled(boolean state) {
+		lastNameEditText.setEnabled(state);
+		nameEditText.setEnabled(state);
+		secondNameEditText.setEnabled(state);
+		newLoginEditText.setEnabled(state);
+		birthEditText.setEnabled(state);
+		genderSpinner.setEnabled(state);
+		acceptButton.setEnabled(state);
+		if (state)
+			progressBar.setVisibility(View.INVISIBLE);
+		else
+			progressBar.setVisibility(View.VISIBLE);
 	}
 
 }

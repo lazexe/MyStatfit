@@ -110,4 +110,14 @@ public class Editor extends AbstractCommandObject implements
 		return activity.getApplicationContext();
 	}
 
+	@Override
+	public void startShowProgress() {
+		activity.showProgress();
+	}
+
+	@Override
+	public void stopShowProgress() {
+		activity.hideProgress();
+	}
+
 }

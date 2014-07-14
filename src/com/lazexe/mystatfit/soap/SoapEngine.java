@@ -37,5 +37,19 @@ public class SoapEngine {
 			return null;
 		}
 
+		@Override
+		protected void onPostExecute(Void result) {
+			executable.stopShowProgress();
+			super.onPostExecute(result);
+		}
+
+		@Override
+		protected void onPreExecute() {
+			executable.startShowProgress();
+			super.onPreExecute();
+		}
+		
+		
+
 	}
 }

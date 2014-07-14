@@ -40,6 +40,8 @@
     <string name="birthday_required">Birthday (required)</string>
     <string name="accept">Accept</string>
     <string name="newlogin_required">New login (required)</string>
+    <string name="edit">Edit</string>
+    <string name="edit_description">Edit user information</string>
     
     <string-array name="navigation_drawer_items">
         <item>Trainings</item>

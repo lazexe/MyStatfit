@@ -103,4 +103,14 @@ public class Registrator extends AbstractCommandObject implements
 		return registrationActivity.getApplicationContext();
 	}
 
+	@Override
+	public void startShowProgress() {
+		registrationActivity.showProgress();
+	}
+
+	@Override
+	public void stopShowProgress() {
+		registrationActivity.hideProgress();
+	}
+
 }

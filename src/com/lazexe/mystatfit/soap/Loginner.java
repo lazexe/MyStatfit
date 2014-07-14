@@ -85,12 +85,24 @@ public class Loginner extends AbstractCommandObject implements SoapExecutableInt
 			}
 		} catch (Exception exception) {
 			exception.printStackTrace();
+		} finally {
+			// TODO
 		}
 	}
 
 	@Override
 	public Context getContext() {
 		return loginActivity.getApplicationContext();
+	}
+
+	@Override
+	public void startShowProgress() {
+		loginActivity.showProgress();
+	}
+
+	@Override
+	public void stopShowProgress() {
+		loginActivity.hideProgress();
 	}
 
 }

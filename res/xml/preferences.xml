@@ -10,6 +10,11 @@
             android:title="@string/logout"
             android:summary="@string/logout_description"/>
         
+        <Preference 
+            android:key="@string/edit"
+            android:title="@string/edit"
+            android:summary="@string/edit_description"/>
+        
     </PreferenceCategory>
     
     <PreferenceCategory

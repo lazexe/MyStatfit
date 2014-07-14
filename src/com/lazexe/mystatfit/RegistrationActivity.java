@@ -9,19 +9,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.lazexe.mystatfit.progress.ProgressShowable;
 import com.lazexe.mystatfit.soap.Registrator;
 import com.lazexe.mystatfit.soap.SoapEngine;
 import com.lazexe.mystatfit.soap.SoapParams;
 
-public class RegistrationActivity extends Activity implements OnClickListener {
+public class RegistrationActivity extends Activity implements OnClickListener, ProgressShowable {
 
 	private SoapEngine engine;
 	private TextView emailEditText;
 	private TextView passwordEditText;
 	private TextView confirmPasswordEditText;
 	public Button registrationButton;
+	private ProgressBar progressBar;
 	private RegistrationActivity activity;
 
 	@Override
@@ -39,6 +42,8 @@ public class RegistrationActivity extends Activity implements OnClickListener {
 		confirmPasswordEditText = (TextView) findViewById(R.id.reg_pass_confirm);
 		registrationButton = (Button) findViewById(R.id.button_register);
 		registrationButton.setOnClickListener(this);
+		progressBar = (ProgressBar) findViewById(R.id.registration_progressbar);
+		progressBar.setVisibility(View.INVISIBLE);
 	}
 
 	@Override
@@ -129,6 +134,27 @@ public class RegistrationActivity extends Activity implements OnClickListener {
 		Intent licenteActivityIntent = new Intent(this,
 				LicenceAgreementActivity.class);
 		startActivity(licenteActivityIntent);
+	}
+
+	@Override
+	public void showProgress() {
+		setControlsEnabled(false);
+	}
+
+	@Override
+	public void hideProgress() {
+		setControlsEnabled(true);
+	}
+	
+	private void setControlsEnabled(boolean state) {
+		emailEditText.setEnabled(state);
+		passwordEditText.setEnabled(state);
+		confirmPasswordEditText.setEnabled(state);
+		registrationButton.setEnabled(state);
+		if (state)
+			progressBar.setVisibility(View.INVISIBLE);
+		else
+			progressBar.setVisibility(View.INVISIBLE);
 	}
 
 }

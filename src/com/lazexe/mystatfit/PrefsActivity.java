@@ -27,6 +27,13 @@ public class PrefsActivity extends PreferenceActivity implements OnPreferenceCli
 		logoutPreference.setTitle(sBuilder.toString());
 		logoutPreference.setOnPreferenceClickListener(this);
 		
+		sBuilder = new StringBuilder(getString(R.string.edit));
+		sBuilder.append(" (");
+		sBuilder.append(PreferencesUtils.getUserLogin(this));
+		sBuilder.append(")");
+		Preference editPreference= findPreference(getString(R.string.edit));
+		editPreference.setTitle(sBuilder.toString());
+		editPreference.setOnPreferenceClickListener(this);
 	}
 
 	@Override
@@ -41,6 +48,11 @@ public class PrefsActivity extends PreferenceActivity implements OnPreferenceCli
 			this.finish();
 			Intent loginActivityIntent = new Intent(this, LoginActivity.class);
 			startActivity(loginActivityIntent);
+		}
+		
+		if (key.equals(getString(R.string.edit))) {
+			Intent editActivityIntent = new Intent(this, EditUserInformationActivity.class);
+			startActivity(editActivityIntent);
 		}
 		
 		return false;
