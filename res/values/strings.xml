@@ -42,6 +42,7 @@
     <string name="newlogin_required">New login (required)</string>
     <string name="edit">Edit</string>
     <string name="edit_description">Edit user information</string>
+    <string name="steps">Steps</string>
     
     <string-array name="navigation_drawer_items">
         <item>Trainings</item>

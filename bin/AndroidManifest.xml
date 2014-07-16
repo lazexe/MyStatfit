@@ -28,7 +28,8 @@
         <activity
             android:name="com.lazexe.mystatfit.RegistrationActivity" />
         <activity
-            android:name="com.lazexe.mystatfit.MainActivity" />
+            android:name="com.lazexe.mystatfit.MainActivity" 
+            android:screenOrientation="portrait"/>
         <activity 
             android:name="com.lazexe.mystatfit.PrefsActivity" />
         <activity

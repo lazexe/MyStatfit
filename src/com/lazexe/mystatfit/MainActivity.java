@@ -2,9 +2,6 @@ package com.lazexe.mystatfit;
 
 import java.util.ArrayList;
 
-import com.lazexe.mystatfit.spinnernavigation.SpinnerNavigationItem;
-import com.lazexe.mystatfit.spinnernavigation.TitleNavigationAdapter;
-
 import android.app.ActionBar;
 import android.app.ActionBar.OnNavigationListener;
 import android.app.Activity;
@@ -12,9 +9,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.wifi.p2p.WifiP2pManager.ActionListener;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -23,9 +20,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import com.lazexe.mystatfit.fragments.RunFragment;
+import com.lazexe.mystatfit.fragments.WelcomeFragment;
+import com.lazexe.mystatfit.spinnernavigation.SpinnerNavigationItem;
+import com.lazexe.mystatfit.spinnernavigation.TitleNavigationAdapter;
 
 public class MainActivity extends Activity implements OnNavigationListener {
 
@@ -35,6 +36,8 @@ public class MainActivity extends Activity implements OnNavigationListener {
 	private static int ID_EXIT = 1011;
 
 	private MainActivity activity;
+	private FrameLayout contentFrame;
+	private FragmentTransaction fragmentTransaction;
 
 	private DrawerLayout drawerLayout;
 	private ListView drawerList;
@@ -45,7 +48,16 @@ public class MainActivity extends Activity implements OnNavigationListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		initControls();
+		fragmentTransaction = getFragmentManager().beginTransaction(); 
+		WelcomeFragment welcomeFragment = new WelcomeFragment();
+		fragmentTransaction.replace(R.id.content_frame, welcomeFragment);
+		fragmentTransaction.commit();
+	}
+
+	private void initControls() {
 		activity = this;
+		contentFrame = (FrameLayout) findViewById(R.id.content_frame);
 		drawerStringItems = getResources().getStringArray(
 				R.array.navigation_drawer_items);
 		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -118,12 +130,11 @@ public class MainActivity extends Activity implements OnNavigationListener {
 				getActionBar()
 						.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 				ArrayList<SpinnerNavigationItem> items = new ArrayList<SpinnerNavigationItem>();
-				items.add(new SpinnerNavigationItem("Run",
-						R.drawable.ic_launcher));
-				items.add(new SpinnerNavigationItem("Jump",
-						R.drawable.ic_launcher));
-				items.add(new SpinnerNavigationItem("Other",
-						R.drawable.ic_launcher));
+				String[] trainingTypes = getResources().getStringArray(R.array.training_type);
+				for (int i = 0; i < trainingTypes.length; i++) {
+					items.add(new SpinnerNavigationItem(trainingTypes[i], R.drawable.ic_launcher));
+				}
+				
 				TitleNavigationAdapter adapter = new TitleNavigationAdapter(
 						activity, items);
 				getActionBar().setListNavigationCallbacks(adapter, activity);
@@ -202,7 +213,13 @@ public class MainActivity extends Activity implements OnNavigationListener {
 
 	@Override
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-		// TODO Auto-generated method stub
+		Log.d(TAG, String.valueOf(itemPosition));
+		fragmentTransaction = getFragmentManager().beginTransaction();
+		if (itemPosition == 0) {
+			RunFragment runFragment = new RunFragment();
+			fragmentTransaction.replace(R.id.content_frame, runFragment);
+			fragmentTransaction.commit();
+		}
 		return false;
 	}
 

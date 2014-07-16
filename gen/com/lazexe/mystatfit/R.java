@@ -33,7 +33,7 @@ public final class R {
         public static final int edit_parent_name=0x7f080003;
         public static final int edit_progressbar=0x7f080007;
         public static final int edit_surname=0x7f080001;
-        public static final int imgIcon=0x7f080017;
+        public static final int imgIcon=0x7f08001b;
         public static final int left_drawer=0x7f080011;
         public static final int licence_agree_button=0x7f080009;
         public static final int licence_disagree_button=0x7f080008;
@@ -42,11 +42,15 @@ public final class R {
         public static final int login_progressbar=0x7f08000e;
         public static final int new_register_button=0x7f08000d;
         public static final int pass=0x7f08000b;
+        public static final int pause_count_steps_button=0x7f080019;
         public static final int reg_email=0x7f080012;
         public static final int reg_pass=0x7f080013;
         public static final int reg_pass_confirm=0x7f080014;
         public static final int registration_progressbar=0x7f080016;
-        public static final int txtTitle=0x7f080018;
+        public static final int start_count_steps_button=0x7f080018;
+        public static final int steps_textview=0x7f080017;
+        public static final int stop_count_steps_button=0x7f08001a;
+        public static final int txtTitle=0x7f08001c;
     }
     public static final class layout {
         public static final int activity_edit_user=0x7f030000;
@@ -55,7 +59,9 @@ public final class R {
         public static final int activity_main=0x7f030003;
         public static final int activity_registration=0x7f030004;
         public static final int drawet_list_item=0x7f030005;
-        public static final int list_item_title_navigation=0x7f030006;
+        public static final int fragment_run=0x7f030006;
+        public static final int fragment_welcome=0x7f030007;
+        public static final int list_item_title_navigation=0x7f030008;
     }
     public static final class string {
         public static final int accept=0x7f050025;
@@ -93,6 +99,7 @@ public final class R {
         public static final int preferences=0x7f050015;
         public static final int registration=0x7f050008;
         public static final int result=0x7f050006;
+        public static final int steps=0x7f050029;
         public static final int support=0x7f050019;
         public static final int sure_exit=0x7f050012;
         public static final int surname_required=0x7f050021;
