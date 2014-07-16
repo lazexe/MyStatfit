@@ -22,35 +22,37 @@ public final class R {
         public static final int ic_launcher=0x7f020003;
     }
     public static final class id {
-        public static final int accept_edit_button=0x7f080006;
-        public static final int button_register=0x7f080015;
-        public static final int content_frame=0x7f080010;
-        public static final int drawer_layout=0x7f08000f;
-        public static final int edit_birthday=0x7f080004;
-        public static final int edit_gender=0x7f080005;
-        public static final int edit_name=0x7f080002;
-        public static final int edit_newlogin=0x7f080000;
-        public static final int edit_parent_name=0x7f080003;
-        public static final int edit_progressbar=0x7f080007;
-        public static final int edit_surname=0x7f080001;
-        public static final int imgIcon=0x7f08001b;
-        public static final int left_drawer=0x7f080011;
-        public static final int licence_agree_button=0x7f080009;
-        public static final int licence_disagree_button=0x7f080008;
-        public static final int login=0x7f08000a;
-        public static final int login_button=0x7f08000c;
-        public static final int login_progressbar=0x7f08000e;
-        public static final int new_register_button=0x7f08000d;
-        public static final int pass=0x7f08000b;
-        public static final int pause_count_steps_button=0x7f080019;
-        public static final int reg_email=0x7f080012;
-        public static final int reg_pass=0x7f080013;
-        public static final int reg_pass_confirm=0x7f080014;
-        public static final int registration_progressbar=0x7f080016;
-        public static final int start_count_steps_button=0x7f080018;
-        public static final int steps_textview=0x7f080017;
-        public static final int stop_count_steps_button=0x7f08001a;
-        public static final int txtTitle=0x7f08001c;
+        public static final int accept_edit_button=0x7f090006;
+        public static final int button_register=0x7f090015;
+        public static final int content_frame=0x7f090010;
+        public static final int drawer_layout=0x7f09000f;
+        public static final int edit_birthday=0x7f090004;
+        public static final int edit_gender=0x7f090005;
+        public static final int edit_name=0x7f090002;
+        public static final int edit_newlogin=0x7f090000;
+        public static final int edit_parent_name=0x7f090003;
+        public static final int edit_progressbar=0x7f090007;
+        public static final int edit_surname=0x7f090001;
+        public static final int imgIcon=0x7f09001b;
+        public static final int left_drawer=0x7f090011;
+        public static final int licence_agree_button=0x7f090009;
+        public static final int licence_disagree_button=0x7f090008;
+        public static final int login=0x7f09000a;
+        public static final int login_button=0x7f09000c;
+        public static final int login_progressbar=0x7f09000e;
+        public static final int main_menu_exit=0x7f09001e;
+        public static final int main_menu_preferences=0x7f09001d;
+        public static final int new_register_button=0x7f09000d;
+        public static final int pass=0x7f09000b;
+        public static final int pause_count_steps_button=0x7f090019;
+        public static final int reg_email=0x7f090012;
+        public static final int reg_pass=0x7f090013;
+        public static final int reg_pass_confirm=0x7f090014;
+        public static final int registration_progressbar=0x7f090016;
+        public static final int start_count_steps_button=0x7f090018;
+        public static final int steps_textview=0x7f090017;
+        public static final int stop_count_steps_button=0x7f09001a;
+        public static final int txtTitle=0x7f09001c;
     }
     public static final class layout {
         public static final int activity_edit_user=0x7f030000;
@@ -62,6 +64,9 @@ public final class R {
         public static final int fragment_run=0x7f030006;
         public static final int fragment_welcome=0x7f030007;
         public static final int list_item_title_navigation=0x7f030008;
+    }
+    public static final class menu {
+        public static final int main_activity_menu=0x7f080000;
     }
     public static final class string {
         public static final int accept=0x7f050025;

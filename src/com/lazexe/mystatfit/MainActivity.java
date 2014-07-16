@@ -16,6 +16,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -177,31 +178,30 @@ public class MainActivity extends Activity implements OnNavigationListener {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
-		menu.add(Menu.NONE, ID_PREFERENCES, Menu.NONE,
-				getString(R.string.preferences));
-		menu.add(Menu.NONE, ID_EXIT, Menu.NONE, getString(R.string.exit));
-
-		return super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = new MenuInflater(this);
+		inflater.inflate(R.menu.main_activity_menu, menu);
+		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-
 		if (drawerToggle.onOptionsItemSelected(item))
 			return true;
-
-		if (item.getItemId() == ID_PREFERENCES) {
+		int id = item.getItemId();
+		switch (id) {
+		case R.id.main_menu_preferences:
 			Intent preferencesActivityIntent = new Intent(this,
 					PrefsActivity.class);
 			startActivityForResult(preferencesActivityIntent, 11);
-		}
-
-		if (item.getItemId() == ID_EXIT) {
+			break;
+		case R.id.main_menu_exit:
 			this.finish();
+			break;
+		default:
+			Log.d(TAG, "onOptionsMenuItemSelected DEFAULT");
+			break;
 		}
-
-		return super.onOptionsItemSelected(item);
+		return true;
 	}
 
 	@Override
