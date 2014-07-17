@@ -31,7 +31,7 @@
             android:name="com.lazexe.mystatfit.MainActivity" 
             android:screenOrientation="portrait"/>
         <activity  
-            android:name="com.lazexe.mystatfit.PrefsActivityefsActivity" />
+            android:name="com.lazexe.mystatfit.PrefsActivity" />
         <activity
             android:name="com.lazexe.mystatfit.EditUserInformationActivity"/>
         <service 
