@@ -1,5 +1,8 @@
 package com.lazexe.mystatfit;
 
+import com.lazexe.mystatfit.R;
+import com.lazexe.mystatfit.R.id;
+import com.lazexe.mystatfit.R.layout;
 import com.lazexe.mystatfit.progress.ProgressShowable;
 import com.lazexe.mystatfit.soap.Editor;
 import com.lazexe.mystatfit.soap.SoapEngine;

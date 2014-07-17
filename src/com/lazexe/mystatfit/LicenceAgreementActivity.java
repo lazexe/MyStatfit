@@ -1,5 +1,9 @@
 package com.lazexe.mystatfit;
 
+import com.lazexe.mystatfit.R;
+import com.lazexe.mystatfit.R.id;
+import com.lazexe.mystatfit.R.layout;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

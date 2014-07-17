@@ -25,15 +25,18 @@
         </activity>
         <activity
             android:name="com.lazexe.mystatfit.LicenceAgreementActivity" />
-        <activity
+        <activity 
             android:name="com.lazexe.mystatfit.RegistrationActivity" />
         <activity
             android:name="com.lazexe.mystatfit.MainActivity" 
             android:screenOrientation="portrait"/>
-        <activity 
-            android:name="com.lazexe.mystatfit.PrefsActivity" />
+        <activity  
+            android:name="com.lazexe.mystatfit.PrefsActivityefsActivity" />
         <activity
-            android:name="com.lazexe.mystatfit.EditUserInformationActivity" />
+            android:name="com.lazexe.mystatfit.EditUserInformationActivity"/>
+        <service 
+            android:enabled="true"
+            android:name="com.lazexe.mystatfit.step.StepCounterService"/>
     </application>
 
 </manifest>

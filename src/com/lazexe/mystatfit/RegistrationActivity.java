@@ -12,6 +12,10 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.lazexe.mystatfit.R;
+import com.lazexe.mystatfit.R.id;
+import com.lazexe.mystatfit.R.layout;
+import com.lazexe.mystatfit.R.string;
 import com.lazexe.mystatfit.progress.ProgressShowable;
 import com.lazexe.mystatfit.soap.Registrator;
 import com.lazexe.mystatfit.soap.SoapEngine;

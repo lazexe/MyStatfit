@@ -10,6 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import com.lazexe.mystatfit.R;
+import com.lazexe.mystatfit.R.id;
+import com.lazexe.mystatfit.R.layout;
 import com.lazexe.mystatfit.progress.ProgressShowable;
 import com.lazexe.mystatfit.soap.Loginner;
 import com.lazexe.mystatfit.soap.SoapEngine;

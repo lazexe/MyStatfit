@@ -24,6 +24,13 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import com.lazexe.mystatfit.R;
+import com.lazexe.mystatfit.R.array;
+import com.lazexe.mystatfit.R.drawable;
+import com.lazexe.mystatfit.R.id;
+import com.lazexe.mystatfit.R.layout;
+import com.lazexe.mystatfit.R.menu;
+import com.lazexe.mystatfit.R.string;
 import com.lazexe.mystatfit.fragments.RunFragment;
 import com.lazexe.mystatfit.fragments.WelcomeFragment;
 import com.lazexe.mystatfit.spinnernavigation.SpinnerNavigationItem;
@@ -218,6 +225,10 @@ public class MainActivity extends Activity implements OnNavigationListener {
 		if (itemPosition == 0) {
 			RunFragment runFragment = new RunFragment();
 			fragmentTransaction.replace(R.id.content_frame, runFragment);
+			fragmentTransaction.commit();
+		} else {
+			WelcomeFragment welcomeFragment = new WelcomeFragment();
+			fragmentTransaction.replace(R.id.content_frame, welcomeFragment);
 			fragmentTransaction.commit();
 		}
 		return false;

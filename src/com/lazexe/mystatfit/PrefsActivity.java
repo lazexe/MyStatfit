@@ -1,5 +1,8 @@
 package com.lazexe.mystatfit;
 
+import com.lazexe.mystatfit.R;
+import com.lazexe.mystatfit.R.string;
+import com.lazexe.mystatfit.R.xml;
 import com.lazexe.mystatfit.utils.PreferencesUtils;
 
 import android.content.Intent;

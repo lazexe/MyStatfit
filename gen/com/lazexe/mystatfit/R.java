@@ -37,6 +37,7 @@ public final class R {
         public static final int left_drawer=0x7f090011;
         public static final int licence_agree_button=0x7f090009;
         public static final int licence_disagree_button=0x7f090008;
+        public static final int lock_count_steps_button=0x7f090019;
         public static final int login=0x7f09000a;
         public static final int login_button=0x7f09000c;
         public static final int login_progressbar=0x7f09000e;
@@ -44,7 +45,6 @@ public final class R {
         public static final int main_menu_preferences=0x7f09001d;
         public static final int new_register_button=0x7f09000d;
         public static final int pass=0x7f09000b;
-        public static final int pause_count_steps_button=0x7f090019;
         public static final int reg_email=0x7f090012;
         public static final int reg_pass=0x7f090013;
         public static final int reg_pass_confirm=0x7f090014;

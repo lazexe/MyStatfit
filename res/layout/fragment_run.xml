@@ -30,11 +30,11 @@
             android:src="@android:drawable/ic_media_play"/>
         
         <ImageButton
-            android:id="@+id/pause_count_steps_button"
+            android:id="@+id/lock_count_steps_button"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_media_pause"/>
+            android:src="@android:drawable/ic_lock_lock"/>
         
         <ImageButton
             android:id="@+id/stop_count_steps_button"
