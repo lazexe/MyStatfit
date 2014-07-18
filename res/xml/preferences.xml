@@ -17,6 +17,23 @@
         
     </PreferenceCategory>
     
+    <PreferenceCategory 
+        android:title="@string/user">
+        
+        <EditTextPreference 
+            android:key="@string/weight"
+            android:title="@string/weight"
+            android:defaultValue="75"
+            android:summary="@string/weight_description"/>
+        
+        <EditTextPreference 
+            android:key="@string/height"
+            android:title="@string/height"
+            android:defaultValue="175"
+            android:summary="@string/height_description"/>
+        
+    </PreferenceCategory>
+    
     <PreferenceCategory
         android:title="@string/information">
         

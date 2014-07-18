@@ -43,6 +43,15 @@
     <string name="edit">Edit</string>
     <string name="edit_description">Edit user information</string>
     <string name="steps">Steps</string>
+    <string name="calories">Calories</string>
+    <string name="time">Time</string>
+    <string name="TODO">TODO</string>
+    <string name="user">User</string>
+    <string name="weight">Weight</string>
+    <string name="weight_description">Set your weight</string>
+    <string name="height">Height</string>
+    <string name="height_description">Set your height</string>
+    <string name="speed">Speed</string>
     
     <string-array name="navigation_drawer_items">
         <item>Trainings</item>

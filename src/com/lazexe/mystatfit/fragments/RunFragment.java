@@ -1,5 +1,7 @@
 package com.lazexe.mystatfit.fragments;
 
+import java.util.Timer;
+
 import android.app.Fragment;
 import android.content.ComponentName;
 import android.content.Context;
@@ -25,10 +27,20 @@ public class RunFragment extends Fragment implements OnClickListener {
 	private static final String TAG = RunFragment.class.getName();
 
 	TextView stepsTextView;
+	TextView caloriesTextView;
+	TextView speedTextView;
+	TextView timeTextView;
 	ImageButton startButton;
 	ImageButton lockButton;
 	ImageButton stopButton;
+	
 	private static int steps;
+	private static int calories;
+	
+	private Timer timer;
+	private int hours;
+	private int minutes;
+	private int seconds;
 
 	private Handler updateDisplay;
 
@@ -49,6 +61,9 @@ public class RunFragment extends Fragment implements OnClickListener {
 		stopButton = (ImageButton) view
 				.findViewById(R.id.stop_count_steps_button);
 		stepsTextView = (TextView) view.findViewById(R.id.steps_textview);
+		caloriesTextView = (TextView) view.findViewById(R.id.calories_textview);
+		timeTextView = (TextView) view.findViewById(R.id.time_textview);
+		speedTextView = (TextView) view.findViewById(R.id.speed_textview);
 		startButton.setOnClickListener(this);
 		lockButton.setOnClickListener(this);
 		stopButton.setOnClickListener(this);
@@ -75,6 +90,7 @@ public class RunFragment extends Fragment implements OnClickListener {
 			getActivity().startService(startIntent);
 			getActivity().bindService(startIntent, new StepServiceConnection(),
 					Context.BIND_AUTO_CREATE);
+			startCountSteps();
 			break;
 		case R.id.lock_count_steps_button:
 			startButton.setEnabled(!startButton.isEnabled());
@@ -89,6 +105,10 @@ public class RunFragment extends Fragment implements OnClickListener {
 			Log.d(TAG, "onClick DEFAULT");
 			break;
 		}
+	}
+	
+	private void startCountSteps() {
+		// TODO
 	}
 
 	class StepServiceConnection implements ServiceConnection {

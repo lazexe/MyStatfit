@@ -1,5 +1,8 @@
 package com.lazexe.mystatfit.soap;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.ksoap2.SoapFault;
 
 import android.content.Context;
@@ -96,6 +99,14 @@ public class Editor extends AbstractCommandObject implements
 				activity.finish();
 				SharedPreferences prefs = activity.getSharedPreferences(Constants.PREFS_USER_DATA_KEY, Context.MODE_PRIVATE);
 				prefs.edit().putString("Login", newLogin).commit();
+				prefs.edit().putString(Constants.PREFS_GENDER_KEY, gender).commit();
+				Calendar calendar = Calendar.getInstance();
+				int currentYear = calendar.get(Calendar.YEAR);
+				int age = currentYear - Integer.valueOf(year);
+				prefs.edit().putInt(Constants.PREFS_AGE_KEY, age).commit();
+				Log.d(TAG, "Current year: " + String.valueOf(currentYear));
+				Log.d(TAG, "Birthday year: " + year);
+				Log.d(TAG, "Age: " + String.valueOf(age));
 				Log.d(TAG, "Edit OK");
 				Intent mainActivityIntent = new Intent(activity, MainActivity.class);
 				activity.startActivity(mainActivityIntent);

@@ -24,6 +24,7 @@ public final class R {
     public static final class id {
         public static final int accept_edit_button=0x7f090006;
         public static final int button_register=0x7f090015;
+        public static final int calories_textview=0x7f090018;
         public static final int content_frame=0x7f090010;
         public static final int drawer_layout=0x7f09000f;
         public static final int edit_birthday=0x7f090004;
@@ -33,26 +34,28 @@ public final class R {
         public static final int edit_parent_name=0x7f090003;
         public static final int edit_progressbar=0x7f090007;
         public static final int edit_surname=0x7f090001;
-        public static final int imgIcon=0x7f09001b;
+        public static final int imgIcon=0x7f09001e;
         public static final int left_drawer=0x7f090011;
         public static final int licence_agree_button=0x7f090009;
         public static final int licence_disagree_button=0x7f090008;
-        public static final int lock_count_steps_button=0x7f090019;
+        public static final int lock_count_steps_button=0x7f09001c;
         public static final int login=0x7f09000a;
         public static final int login_button=0x7f09000c;
         public static final int login_progressbar=0x7f09000e;
-        public static final int main_menu_exit=0x7f09001e;
-        public static final int main_menu_preferences=0x7f09001d;
+        public static final int main_menu_exit=0x7f090021;
+        public static final int main_menu_preferences=0x7f090020;
         public static final int new_register_button=0x7f09000d;
         public static final int pass=0x7f09000b;
         public static final int reg_email=0x7f090012;
         public static final int reg_pass=0x7f090013;
         public static final int reg_pass_confirm=0x7f090014;
         public static final int registration_progressbar=0x7f090016;
-        public static final int start_count_steps_button=0x7f090018;
+        public static final int speed_textview=0x7f090019;
+        public static final int start_count_steps_button=0x7f09001b;
         public static final int steps_textview=0x7f090017;
-        public static final int stop_count_steps_button=0x7f09001a;
-        public static final int txtTitle=0x7f09001c;
+        public static final int stop_count_steps_button=0x7f09001d;
+        public static final int time_textview=0x7f09001a;
+        public static final int txtTitle=0x7f09001f;
     }
     public static final class layout {
         public static final int activity_edit_user=0x7f030000;
@@ -69,12 +72,14 @@ public final class R {
         public static final int main_activity_menu=0x7f080000;
     }
     public static final class string {
+        public static final int TODO=0x7f05002c;
         public static final int accept=0x7f050025;
         public static final int account=0x7f05001c;
         public static final int agree=0x7f050014;
         public static final int app_name=0x7f050000;
         public static final int app_version=0x7f050001;
         public static final int birthday_required=0x7f050024;
+        public static final int calories=0x7f05002a;
         public static final int developer=0x7f050017;
         public static final int disagree=0x7f050013;
         public static final int drawer_close=0x7f050020;
@@ -89,6 +94,8 @@ public final class R {
         public static final int error_password_mismatch=0x7f05000f;
         public static final int error_whitespace=0x7f050010;
         public static final int exit=0x7f050011;
+        public static final int height=0x7f050030;
+        public static final int height_description=0x7f050031;
         public static final int hello_world=0x7f050003;
         public static final int information=0x7f050016;
         public static final int lazexe_email_address=0x7f05001a;
@@ -104,12 +111,17 @@ public final class R {
         public static final int preferences=0x7f050015;
         public static final int registration=0x7f050008;
         public static final int result=0x7f050006;
+        public static final int speed=0x7f050032;
         public static final int steps=0x7f050029;
         public static final int support=0x7f050019;
         public static final int sure_exit=0x7f050012;
         public static final int surname_required=0x7f050021;
+        public static final int time=0x7f05002b;
         public static final int title_activity_main=0x7f050002;
+        public static final int user=0x7f05002d;
         public static final int version=0x7f05001b;
+        public static final int weight=0x7f05002e;
+        public static final int weight_description=0x7f05002f;
         public static final int wrong_login_or_pass=0x7f050007;
     }
     public static final class style {
