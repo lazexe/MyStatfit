@@ -24,9 +24,9 @@ import android.widget.Spinner;
 public class EditUserInformationActivity extends Activity implements
 		OnClickListener, OnFocusChangeListener, ProgressShowable {
 
-	private EditText lastNameEditText; // ot4
-	private EditText nameEditText; // name
-	private EditText secondNameEditText; // parent name
+	private EditText lastNameEditText; // отчество
+	private EditText nameEditText; // имя
+	private EditText secondNameEditText; // фамилия
 	private EditText newLoginEditText;
 	private EditText birthEditText;
 	private Spinner genderSpinner;
