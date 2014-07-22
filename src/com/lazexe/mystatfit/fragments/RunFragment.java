@@ -1,6 +1,7 @@
 package com.lazexe.mystatfit.fragments;
 
 import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.Fragment;
 import android.content.ComponentName;
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -33,10 +35,11 @@ public class RunFragment extends Fragment implements OnClickListener {
 	ImageButton startButton;
 	ImageButton lockButton;
 	ImageButton stopButton;
-	
+
 	private static int steps;
 	private static int calories;
-	
+	private int speed;
+
 	private Timer timer;
 	private int hours;
 	private int minutes;
@@ -95,6 +98,11 @@ public class RunFragment extends Fragment implements OnClickListener {
 		case R.id.lock_count_steps_button:
 			startButton.setEnabled(!startButton.isEnabled());
 			stopButton.setEnabled(!stopButton.isEnabled());
+			if (getActivity().getActionBar().isShowing()) {
+				getActivity().getActionBar().hide();
+			} else {
+				getActivity().getActionBar().show();
+			}
 			break;
 		case R.id.stop_count_steps_button:
 			Intent stopIntent = new Intent(getActivity(),
@@ -106,10 +114,54 @@ public class RunFragment extends Fragment implements OnClickListener {
 			break;
 		}
 	}
-	
+
 	private void startCountSteps() {
-		// TODO
+		timer = new Timer();
+		timer.schedule(task, 1000, 1000);
 	}
+
+	private TimerTask task = new TimerTask() {
+
+		@Override
+		public void run() {
+			getActivity().runOnUiThread(new Runnable() {
+
+				@Override
+				public void run() {
+					seconds++;
+					if (seconds == 60) {
+						seconds = 0;
+						minutes++;
+					}
+					if (minutes == 60) {
+						minutes = 0;
+						hours++;
+					}
+
+					if (steps > 0) {
+						speed = (int) ((((hours / 3600) + (minutes / 60) + seconds) / steps) * 60);
+					}
+
+					// //Women
+					// if(gender == 0){
+					// calories +=
+					// (int)(((((655+(9.6*weight)+(1.8*height)-(4.7*age))*ACTIVITY_COEFFICIENT)/24)/3600)
+					// *(second));
+					// }//men
+					// else{
+					// calories +=
+					// (int)(((((66+(13.7*weight)+(5*height)-(6.8*age))*ACTIVITY_COEFFICIENT)/24)/3600)
+					// *(second));
+					// }
+
+					speedTextView.setText(String.valueOf(speed));
+					timeTextView.setText(String.valueOf(hours) + " : "
+							+ String.valueOf(minutes) + " : "
+							+ String.valueOf(seconds));
+				}
+			});
+		}
+	};
 
 	class StepServiceConnection implements ServiceConnection {
 
