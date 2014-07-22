@@ -26,9 +26,6 @@ public class NavigationDrawerAdapter extends ArrayAdapter<DrawerItem> {
 		this.list = list;
 		this.layoutResourseID = layoutResourseID;
 	}
-	
-	
-	
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -69,9 +66,6 @@ public class NavigationDrawerAdapter extends ArrayAdapter<DrawerItem> {
 		
 		return view;
 	}
-
-
-
 
 	private static class DrawerItemHolder {
 		TextView itemName, title;

@@ -31,6 +31,8 @@ import com.lazexe.mystatfit.R.id;
 import com.lazexe.mystatfit.R.layout;
 import com.lazexe.mystatfit.R.menu;
 import com.lazexe.mystatfit.R.string;
+import com.lazexe.mystatfit.adapters.DrawerItem;
+import com.lazexe.mystatfit.adapters.NavigationDrawerAdapter;
 import com.lazexe.mystatfit.fragments.RunFragment;
 import com.lazexe.mystatfit.fragments.WelcomeFragment;
 import com.lazexe.mystatfit.spinnernavigation.SpinnerNavigationItem;
@@ -40,9 +42,6 @@ public class MainActivity extends Activity implements OnNavigationListener {
 
 	private static final String TAG = MainActivity.class.getName();
 
-	private static int ID_PREFERENCES = 1010;
-	private static int ID_EXIT = 1011;
-
 	private MainActivity activity;
 	private FrameLayout contentFrame;
 	private FragmentTransaction fragmentTransaction;
@@ -50,7 +49,6 @@ public class MainActivity extends Activity implements OnNavigationListener {
 	private DrawerLayout drawerLayout;
 	private ListView drawerList;
 	private ActionBarDrawerToggle drawerToggle;
-	private String[] drawerStringItems;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,15 +64,19 @@ public class MainActivity extends Activity implements OnNavigationListener {
 	private void initControls() {
 		activity = this;
 		contentFrame = (FrameLayout) findViewById(R.id.content_frame);
-		drawerStringItems = getResources().getStringArray(
-				R.array.navigation_drawer_items);
 		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		drawerList = (ListView) findViewById(R.id.left_drawer);
 		drawerLayout.setDrawerShadow(
 				getResources().getDrawable(R.drawable.drawer_shadow),
 				GravityCompat.START);
-		drawerList.setAdapter(new ArrayAdapter<String>(this,
-				R.layout.drawet_list_item, drawerStringItems));
+		ArrayList<DrawerItem> dataList = new ArrayList<DrawerItem>();
+		dataList.add(new DrawerItem("Trainings"));
+		dataList.add(new DrawerItem("Run", R.drawable.ic_launcher));
+		dataList.add(new DrawerItem("Other"));
+		dataList.add(new DrawerItem("Settings", android.R.drawable.ic_menu_preferences));
+		dataList.add(new DrawerItem("Quit", android.R.drawable.ic_lock_power_off));
+		NavigationDrawerAdapter adapter = new NavigationDrawerAdapter(this, R.layout.drawet_list_item, dataList);
+		drawerList.setAdapter(adapter);
 		drawerList.setOnItemClickListener(new DrawerItemClickListener());
 
 		if (getActionBar() != null) {
