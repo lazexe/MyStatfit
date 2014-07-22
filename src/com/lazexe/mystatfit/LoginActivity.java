@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import android.widget.ProgressBar;
 import com.lazexe.mystatfit.R;
 import com.lazexe.mystatfit.R.id;
 import com.lazexe.mystatfit.R.layout;
+import com.lazexe.mystatfit.database.TrainingDatabase;
 import com.lazexe.mystatfit.progress.ProgressShowable;
 import com.lazexe.mystatfit.soap.Loginner;
 import com.lazexe.mystatfit.soap.SoapEngine;
@@ -36,6 +38,10 @@ public class LoginActivity extends Activity implements ProgressShowable {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		TrainingDatabase db = new TrainingDatabase(this);
+		SQLiteDatabase base = db.getWritableDatabase();
+		base.close();
+		db.close();
 		initComponents();
 	}
 

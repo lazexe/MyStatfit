@@ -9,6 +9,7 @@ public class DrawerItem {
 	public DrawerItem(String itemName, int imageResourseID) {
 		this.itemName = itemName;
 		this.imageResourseID = imageResourseID;
+		this.title = null;
 	}
 	
 	public DrawerItem(String title) {

@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.lazexe.mystatfit.R;
 import com.lazexe.mystatfit.R.array;
@@ -38,7 +39,7 @@ import com.lazexe.mystatfit.fragments.WelcomeFragment;
 import com.lazexe.mystatfit.spinnernavigation.SpinnerNavigationItem;
 import com.lazexe.mystatfit.spinnernavigation.TitleNavigationAdapter;
 
-public class MainActivity extends Activity implements OnNavigationListener {
+public class MainActivity extends Activity {
 
 	private static final String TAG = MainActivity.class.getName();
 
@@ -56,7 +57,7 @@ public class MainActivity extends Activity implements OnNavigationListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initControls();
-		fragmentTransaction = getFragmentManager().beginTransaction(); 
+		fragmentTransaction = getFragmentManager().beginTransaction();
 		WelcomeFragment welcomeFragment = new WelcomeFragment();
 		fragmentTransaction.replace(R.id.content_frame, welcomeFragment);
 		fragmentTransaction.commit();
@@ -71,12 +72,16 @@ public class MainActivity extends Activity implements OnNavigationListener {
 				getResources().getDrawable(R.drawable.drawer_shadow),
 				GravityCompat.START);
 		dataList = new ArrayList<DrawerItem>();
-		dataList.add(new DrawerItem("Trainings"));
-		dataList.add(new DrawerItem("Run", R.drawable.ic_launcher));
-		dataList.add(new DrawerItem("Other"));
-		dataList.add(new DrawerItem("Settings", android.R.drawable.ic_menu_preferences));
-		dataList.add(new DrawerItem("Quit", android.R.drawable.ic_lock_power_off));
-		NavigationDrawerAdapter adapter = new NavigationDrawerAdapter(this, R.layout.drawet_list_item, dataList);
+		dataList.add(new DrawerItem(getString(R.string.trainings)));
+		dataList.add(new DrawerItem(getString(R.string.run),
+				R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.other)));
+		dataList.add(new DrawerItem(getString(R.string.settings),
+				android.R.drawable.ic_menu_preferences));
+		dataList.add(new DrawerItem(getString(R.string.quit),
+				android.R.drawable.ic_lock_power_off));
+		NavigationDrawerAdapter adapter = new NavigationDrawerAdapter(this,
+				R.layout.drawet_list_item, dataList);
 		drawerList.setAdapter(adapter);
 		drawerList.setOnItemClickListener(new DrawerItemClickListener());
 
@@ -131,40 +136,33 @@ public class MainActivity extends Activity implements OnNavigationListener {
 			if (dataList.get(position).getTitle() == null) {
 				selectItem(position);
 			}
-			drawerList.setItemChecked(position, true);
-			drawerLayout.closeDrawer(drawerList);
-			String[] titles = getResources().getStringArray(
-					R.array.navigation_drawer_items);
-			String newTitle = titles[position];
-			getActionBar().setTitle(newTitle);
-
-			switch (position) {
-			case 0: // Trainings
-				getActionBar().setDisplayShowTitleEnabled(false);
-				getActionBar()
-						.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-				ArrayList<SpinnerNavigationItem> items = new ArrayList<SpinnerNavigationItem>();
-				String[] trainingTypes = getResources().getStringArray(R.array.training_type);
-				for (int i = 0; i < trainingTypes.length; i++) {
-					items.add(new SpinnerNavigationItem(trainingTypes[i], R.drawable.ic_launcher));
-				}
-				
-				TitleNavigationAdapter adapter = new TitleNavigationAdapter(
-						activity, items);
-				getActionBar().setListNavigationCallbacks(adapter, activity);
-				break;
-
-			default:
-				getActionBar().setNavigationMode(
-						ActionBar.NAVIGATION_MODE_STANDARD);
-				break;
-			}
 		}
 	}
-	
+
 	private void selectItem(int position) {
-		// TODO
-		
+		drawerList.setItemChecked(position, true);
+		drawerLayout.closeDrawer(drawerList);
+		getActionBar().setTitle(dataList.get(position).getItemName());
+		String item = dataList.get(position).getItemName();
+
+		if (item.equals(getString(R.string.run))) {
+			fragmentTransaction = getFragmentManager().beginTransaction();
+			RunFragment runFragment = new RunFragment();
+			fragmentTransaction.replace(R.id.content_frame, runFragment);
+			fragmentTransaction.commit();
+		} else if (item.equals(getString(R.string.settings))) {
+			Intent preferencesActivityIntent = new Intent(this,
+					PrefsActivity.class);
+			startActivityForResult(preferencesActivityIntent, 11);
+		} else if (item.equals(getString(R.string.quit))) {
+			this.finish();
+		} else {
+			fragmentTransaction = getFragmentManager().beginTransaction();
+			WelcomeFragment welcomeFragment = new WelcomeFragment();
+			fragmentTransaction.replace(R.id.content_frame, welcomeFragment);
+			fragmentTransaction.commit();
+
+		}
 	}
 
 	@Override
@@ -205,21 +203,8 @@ public class MainActivity extends Activity implements OnNavigationListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (drawerToggle.onOptionsItemSelected(item))
 			return true;
-		int id = item.getItemId();
-		switch (id) {
-		case R.id.main_menu_preferences:
-			Intent preferencesActivityIntent = new Intent(this,
-					PrefsActivity.class);
-			startActivityForResult(preferencesActivityIntent, 11);
-			break;
-		case R.id.main_menu_exit:
-			this.finish();
-			break;
-		default:
-			Log.d(TAG, "onOptionsMenuItemSelected DEFAULT");
-			break;
-		}
-		return true;
+		
+		return false;
 	}
 
 	@Override
@@ -227,22 +212,6 @@ public class MainActivity extends Activity implements OnNavigationListener {
 		if (resultCode == RESULT_OK) {
 			this.finish();
 		}
-	}
-
-	@Override
-	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-		Log.d(TAG, String.valueOf(itemPosition));
-		fragmentTransaction = getFragmentManager().beginTransaction();
-		if (itemPosition == 0) {
-			RunFragment runFragment = new RunFragment();
-			fragmentTransaction.replace(R.id.content_frame, runFragment);
-			fragmentTransaction.commit();
-		} else {
-			WelcomeFragment welcomeFragment = new WelcomeFragment();
-			fragmentTransaction.replace(R.id.content_frame, welcomeFragment);
-			fragmentTransaction.commit();
-		}
-		return false;
 	}
 
 }
