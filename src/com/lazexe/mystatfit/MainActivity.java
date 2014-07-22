@@ -73,8 +73,19 @@ public class MainActivity extends Activity {
 				GravityCompat.START);
 		dataList = new ArrayList<DrawerItem>();
 		dataList.add(new DrawerItem(getString(R.string.trainings)));
-		dataList.add(new DrawerItem(getString(R.string.run),
-				R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.running), R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.walking), R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.cycle_racing), R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.mountain_biking), R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.hiking), R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.downhill), R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.cross_country_skiing), R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.snowboarding), R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.skating), R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.swimming), R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.riding_in_a_wheelchair), R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.rowing), R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.nordic_walking), R.drawable.ic_launcher));
 		dataList.add(new DrawerItem(getString(R.string.other)));
 		dataList.add(new DrawerItem(getString(R.string.settings),
 				android.R.drawable.ic_menu_preferences));
@@ -145,7 +156,7 @@ public class MainActivity extends Activity {
 		getActionBar().setTitle(dataList.get(position).getItemName());
 		String item = dataList.get(position).getItemName();
 
-		if (item.equals(getString(R.string.run))) {
+		if (item.equals(getString(R.string.running))) {
 			fragmentTransaction = getFragmentManager().beginTransaction();
 			RunFragment runFragment = new RunFragment();
 			fragmentTransaction.replace(R.id.content_frame, runFragment);

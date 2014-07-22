@@ -52,28 +52,30 @@
     <string name="height">Height</string>
     <string name="height_description">Set your height</string>
     <string name="speed">Speed</string>
-    
-    <string-array name="navigation_drawer_items">
-        <item>Trainings</item>
-        <item>Second</item>
-        <item>Third</item>
-    </string-array>
-    
-    <string-array name="training_type">
-        <item>Run</item>
-        <item>Jump</item>
-        <item>Other</item>
-    </string-array>
-    
+        
+	<string name="trainings">Trainings</string>
+	<string name="running">Running</string>
+	<string name="cycle_racing">Cycle racing</string>
+	<string name="mountain_biking">Mountain biking</string>
+	<string name="walking">Walking</string>
+	<string name="hiking">Hiking</string>
+	<string name="downhill">Downhill</string>
+	<string name="cross_country_skiing">cross-country skiing</string>
+	<string name="snowboarding">Snowboarding</string>
+	<string name="skating">Skating</string>
+	<string name="swimming">Swimming</string>
+	<string name="riding_in_a_wheelchair">Riding in a wheelchair</string>
+	<string name="rowing">Rowing</string>
+	<string name="nordic_walking">Nordic walking</string>
+	    
+	<string name="other">Other</string>
+	<string name="settings">Settings</string>
+	<string name="quit">Quit</string>
+
     <string-array name="gender_type">
         <item>Male</item>
         <item>Female</item>
     </string-array>
-        <string name="trainings">Trainings</string>
-        <string name="run">Run</string>
-        <string name="other">Other</string>
-        <string name="settings">Settings</string>
-        <string name="quit">Quit</string>
-    
+	
 
 </resources>

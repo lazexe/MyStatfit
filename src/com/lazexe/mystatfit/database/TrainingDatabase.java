@@ -47,6 +47,17 @@ public class TrainingDatabase extends SQLiteOpenHelper {
 		super(context, DB_NAME, null, DB_VERSION);
 	}
 	
+
+	@Override
+	public void onCreate(SQLiteDatabase db) {
+		createRunTable(db);
+	}
+	
+	private void createRunTable(SQLiteDatabase database) {
+		String query = createRunTableQuery();
+		database.execSQL(query);
+	}
+	
 	private String createRunTableQuery() {
 		
 		StringBuilder stringBuilder = new StringBuilder();
@@ -64,11 +75,6 @@ public class TrainingDatabase extends SQLiteOpenHelper {
 		return stringBuilder.toString();
 	}
 
-	@Override
-	public void onCreate(SQLiteDatabase db) {
-		String query = createRunTableQuery();
-		db.execSQL(query);
-	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
