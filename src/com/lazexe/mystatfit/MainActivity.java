@@ -49,6 +49,7 @@ public class MainActivity extends Activity implements OnNavigationListener {
 	private DrawerLayout drawerLayout;
 	private ListView drawerList;
 	private ActionBarDrawerToggle drawerToggle;
+	private ArrayList<DrawerItem> dataList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +70,7 @@ public class MainActivity extends Activity implements OnNavigationListener {
 		drawerLayout.setDrawerShadow(
 				getResources().getDrawable(R.drawable.drawer_shadow),
 				GravityCompat.START);
-		ArrayList<DrawerItem> dataList = new ArrayList<DrawerItem>();
+		dataList = new ArrayList<DrawerItem>();
 		dataList.add(new DrawerItem("Trainings"));
 		dataList.add(new DrawerItem("Run", R.drawable.ic_launcher));
 		dataList.add(new DrawerItem("Other"));
@@ -127,6 +128,9 @@ public class MainActivity extends Activity implements OnNavigationListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
+			if (dataList.get(position).getTitle() == null) {
+				selectItem(position);
+			}
 			drawerList.setItemChecked(position, true);
 			drawerLayout.closeDrawer(drawerList);
 			String[] titles = getResources().getStringArray(
@@ -156,6 +160,11 @@ public class MainActivity extends Activity implements OnNavigationListener {
 				break;
 			}
 		}
+	}
+	
+	private void selectItem(int position) {
+		// TODO
+		
 	}
 
 	@Override
