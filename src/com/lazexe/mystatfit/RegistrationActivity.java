@@ -12,16 +12,13 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.lazexe.mystatfit.R;
-import com.lazexe.mystatfit.R.id;
-import com.lazexe.mystatfit.R.layout;
-import com.lazexe.mystatfit.R.string;
 import com.lazexe.mystatfit.progress.ProgressShowable;
 import com.lazexe.mystatfit.soap.Registrator;
 import com.lazexe.mystatfit.soap.SoapEngine;
 import com.lazexe.mystatfit.soap.SoapParams;
 
-public class RegistrationActivity extends Activity implements OnClickListener, ProgressShowable {
+public class RegistrationActivity extends Activity implements OnClickListener,
+		ProgressShowable {
 
 	private SoapEngine engine;
 	private TextView emailEditText;
@@ -69,7 +66,6 @@ public class RegistrationActivity extends Activity implements OnClickListener, P
 	}
 
 	private boolean isEmailCorrect() {
-		// a@t.ru
 		boolean isCorrect = true;
 		Pattern pattern = Pattern
 				.compile("[a-zA-Z]{1}[a-zA-Z\\d\\u002E\\u005F]+@([a-zA-Z]+\\u002E){1,2}((net)|(com)|(org)|(ru))");
@@ -81,7 +77,7 @@ public class RegistrationActivity extends Activity implements OnClickListener, P
 			emailEditText.requestFocus();
 			return isCorrect;
 		}
-		
+
 		if (email.contains(" ")) {
 			isCorrect = false;
 			emailEditText.setError(getString(R.string.error_whitespace));
@@ -149,7 +145,7 @@ public class RegistrationActivity extends Activity implements OnClickListener, P
 	public void hideProgress() {
 		setControlsEnabled(true);
 	}
-	
+
 	private void setControlsEnabled(boolean state) {
 		emailEditText.setEnabled(state);
 		passwordEditText.setEnabled(state);

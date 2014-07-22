@@ -11,9 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
-import com.lazexe.mystatfit.R;
-import com.lazexe.mystatfit.R.id;
-import com.lazexe.mystatfit.R.layout;
 import com.lazexe.mystatfit.database.TrainingDatabase;
 import com.lazexe.mystatfit.progress.ProgressShowable;
 import com.lazexe.mystatfit.soap.Loginner;
@@ -22,8 +19,6 @@ import com.lazexe.mystatfit.soap.SoapParams;
 import com.lazexe.mystatfit.utils.Constants;
 
 public class LoginActivity extends Activity implements ProgressShowable {
-
-	private static final String TAG = LoginActivity.class.getName();
 
 	private SoapEngine engine;
 
@@ -58,7 +53,7 @@ public class LoginActivity extends Activity implements ProgressShowable {
 		newRegisterButton.setOnClickListener(handler);
 		progressBar = (ProgressBar) findViewById(R.id.login_progressbar);
 		progressBar.setVisibility(View.INVISIBLE);
-		
+
 		SharedPreferences prefs = getSharedPreferences(
 				Constants.PREFS_USER_DATA_KEY, MODE_PRIVATE);
 		String login = prefs.getString("Login", null);
@@ -104,21 +99,21 @@ public class LoginActivity extends Activity implements ProgressShowable {
 	@Override
 	public void showProgress() {
 		setControlsEnabled(false);
-		
+
 	}
 
 	@Override
 	public void hideProgress() {
 		setControlsEnabled(true);
-		
+
 	}
-	
+
 	private void setControlsEnabled(boolean state) {
 		loginEditText.setEnabled(state);
 		passEditText.setEnabled(state);
 		loginButton.setEnabled(state);
 		newRegisterButton.setEnabled(state);
-		if (state) 
+		if (state)
 			progressBar.setVisibility(View.INVISIBLE);
 		else
 			progressBar.setVisibility(View.VISIBLE);

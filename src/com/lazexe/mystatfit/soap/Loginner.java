@@ -15,9 +15,8 @@ import com.lazexe.mystatfit.R;
 import com.lazexe.mystatfit.utils.Constants;
 import com.lazexe.mystatfit.utils.SoapUtils;
 
-public class Loginner extends AbstractCommandObject implements SoapExecutableInterface {
-
-	private static final String TAG = Loginner.class.getName();
+public class Loginner extends AbstractCommandObject implements
+		SoapExecutableInterface {
 
 	private final String USER_PROPERTY_KEY = "user";
 	private final String PASSWD_PROPERTY_KEY = "password";
@@ -32,7 +31,8 @@ public class Loginner extends AbstractCommandObject implements SoapExecutableInt
 
 	private LoginActivity loginActivity;
 
-	public Loginner(SoapParams params, LoginActivity loginActivity, String login, String password) {
+	public Loginner(SoapParams params, LoginActivity loginActivity,
+			String login, String password) {
 		super(params);
 		this.loginActivity = loginActivity;
 		this.login = login;

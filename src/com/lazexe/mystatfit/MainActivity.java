@@ -2,49 +2,31 @@ package com.lazexe.mystatfit;
 
 import java.util.ArrayList;
 
-import android.app.ActionBar;
-import android.app.ActionBar.OnNavigationListener;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.lazexe.mystatfit.R;
-import com.lazexe.mystatfit.R.array;
-import com.lazexe.mystatfit.R.drawable;
-import com.lazexe.mystatfit.R.id;
-import com.lazexe.mystatfit.R.layout;
-import com.lazexe.mystatfit.R.menu;
-import com.lazexe.mystatfit.R.string;
 import com.lazexe.mystatfit.adapters.DrawerItem;
 import com.lazexe.mystatfit.adapters.NavigationDrawerAdapter;
 import com.lazexe.mystatfit.fragments.RunFragment;
 import com.lazexe.mystatfit.fragments.WelcomeFragment;
-import com.lazexe.mystatfit.spinnernavigation.SpinnerNavigationItem;
-import com.lazexe.mystatfit.spinnernavigation.TitleNavigationAdapter;
 
 public class MainActivity extends Activity {
 
-	private static final String TAG = MainActivity.class.getName();
-
 	private MainActivity activity;
-	private FrameLayout contentFrame;
 	private FragmentTransaction fragmentTransaction;
 
 	private DrawerLayout drawerLayout;
@@ -65,7 +47,6 @@ public class MainActivity extends Activity {
 
 	private void initControls() {
 		activity = this;
-		contentFrame = (FrameLayout) findViewById(R.id.content_frame);
 		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		drawerList = (ListView) findViewById(R.id.left_drawer);
 		drawerLayout.setDrawerShadow(
@@ -73,19 +54,32 @@ public class MainActivity extends Activity {
 				GravityCompat.START);
 		dataList = new ArrayList<DrawerItem>();
 		dataList.add(new DrawerItem(getString(R.string.trainings)));
-		dataList.add(new DrawerItem(getString(R.string.running), R.drawable.ic_launcher));
-		dataList.add(new DrawerItem(getString(R.string.walking), R.drawable.ic_launcher));
-		dataList.add(new DrawerItem(getString(R.string.cycle_racing), R.drawable.ic_launcher));
-		dataList.add(new DrawerItem(getString(R.string.mountain_biking), R.drawable.ic_launcher));
-		dataList.add(new DrawerItem(getString(R.string.hiking), R.drawable.ic_launcher));
-		dataList.add(new DrawerItem(getString(R.string.downhill), R.drawable.ic_launcher));
-		dataList.add(new DrawerItem(getString(R.string.cross_country_skiing), R.drawable.ic_launcher));
-		dataList.add(new DrawerItem(getString(R.string.snowboarding), R.drawable.ic_launcher));
-		dataList.add(new DrawerItem(getString(R.string.skating), R.drawable.ic_launcher));
-		dataList.add(new DrawerItem(getString(R.string.swimming), R.drawable.ic_launcher));
-		dataList.add(new DrawerItem(getString(R.string.riding_in_a_wheelchair), R.drawable.ic_launcher));
-		dataList.add(new DrawerItem(getString(R.string.rowing), R.drawable.ic_launcher));
-		dataList.add(new DrawerItem(getString(R.string.nordic_walking), R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.running),
+				R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.walking),
+				R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.cycle_racing),
+				R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.mountain_biking),
+				R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.hiking),
+				R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.downhill),
+				R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.cross_country_skiing),
+				R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.snowboarding),
+				R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.skating),
+				R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.swimming),
+				R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.riding_in_a_wheelchair),
+				R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.rowing),
+				R.drawable.ic_launcher));
+		dataList.add(new DrawerItem(getString(R.string.nordic_walking),
+				R.drawable.ic_launcher));
 		dataList.add(new DrawerItem(getString(R.string.other)));
 		dataList.add(new DrawerItem(getString(R.string.settings),
 				android.R.drawable.ic_menu_preferences));
@@ -107,7 +101,6 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onDrawerOpened(View drawerView) {
-				getActionBar().setTitle("");
 				invalidateOptionsMenu();
 			}
 
@@ -214,7 +207,7 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (drawerToggle.onOptionsItemSelected(item))
 			return true;
-		
+
 		return false;
 	}
 

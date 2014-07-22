@@ -1,7 +1,6 @@
 package com.lazexe.mystatfit.soap;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import org.ksoap2.SoapFault;
 

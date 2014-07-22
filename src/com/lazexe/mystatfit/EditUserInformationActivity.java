@@ -1,14 +1,5 @@
 package com.lazexe.mystatfit;
 
-import com.lazexe.mystatfit.R;
-import com.lazexe.mystatfit.R.id;
-import com.lazexe.mystatfit.R.layout;
-import com.lazexe.mystatfit.progress.ProgressShowable;
-import com.lazexe.mystatfit.soap.Editor;
-import com.lazexe.mystatfit.soap.SoapEngine;
-import com.lazexe.mystatfit.soap.SoapParams;
-import com.lazexe.mystatfit.utils.Date;
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -20,6 +11,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+
+import com.lazexe.mystatfit.progress.ProgressShowable;
+import com.lazexe.mystatfit.soap.Editor;
+import com.lazexe.mystatfit.soap.SoapEngine;
+import com.lazexe.mystatfit.soap.SoapParams;
+import com.lazexe.mystatfit.utils.Date;
 
 public class EditUserInformationActivity extends Activity implements
 		OnClickListener, OnFocusChangeListener, ProgressShowable {
@@ -33,7 +30,7 @@ public class EditUserInformationActivity extends Activity implements
 	private Button acceptButton;
 	private Date birthDate;
 	private SoapEngine engine;
-	
+
 	private ProgressBar progressBar;
 
 	@Override
@@ -53,13 +50,12 @@ public class EditUserInformationActivity extends Activity implements
 				engine = SoapEngine.getInstance();
 				SoapParams params = new SoapParams(Editor.SOAP_ACTION,
 						Editor.METHOD_NAME, Editor.NAMESPACE, Editor.URL);
-				engine.runCommand(new Editor(params, this, 
-						nameEditText.getText().toString(), 
-						lastNameEditText.getText().toString(), 
-						secondNameEditText.getText().toString(),
-						newLoginEditText.getText().toString(), 
-						genderSpinner.getSelectedItem().toString(), 
-						birthEditText.getText().toString()));
+				engine.runCommand(new Editor(params, this, nameEditText
+						.getText().toString(), lastNameEditText.getText()
+						.toString(), secondNameEditText.getText().toString(),
+						newLoginEditText.getText().toString(), genderSpinner
+								.getSelectedItem().toString(), birthEditText
+								.getText().toString()));
 			}
 		}
 	}
@@ -120,7 +116,7 @@ public class EditUserInformationActivity extends Activity implements
 	public void hideProgress() {
 		setControlsEnabled(true);
 	}
-	
+
 	private void setControlsEnabled(boolean state) {
 		lastNameEditText.setEnabled(state);
 		nameEditText.setEnabled(state);

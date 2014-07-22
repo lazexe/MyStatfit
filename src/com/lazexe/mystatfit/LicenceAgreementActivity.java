@@ -1,9 +1,5 @@
 package com.lazexe.mystatfit;
 
-import com.lazexe.mystatfit.R;
-import com.lazexe.mystatfit.R.id;
-import com.lazexe.mystatfit.R.layout;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,16 +7,17 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class LicenceAgreementActivity extends Activity implements OnClickListener {
+public class LicenceAgreementActivity extends Activity implements
+		OnClickListener {
 
 	private Button agreeButton;
 	private Button disagreeButton;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_licence);
-		
+
 		agreeButton = (Button) findViewById(R.id.licence_agree_button);
 		agreeButton.setOnClickListener(this);
 		disagreeButton = (Button) findViewById(R.id.licence_disagree_button);
@@ -31,7 +28,8 @@ public class LicenceAgreementActivity extends Activity implements OnClickListene
 	public void onClick(View view) {
 		if (view.getId() == R.id.licence_agree_button) {
 			this.finish();
-			Intent registrationActivityIntent = new Intent(this, RegistrationActivity.class);
+			Intent registrationActivityIntent = new Intent(this,
+					RegistrationActivity.class);
 			startActivity(registrationActivityIntent);
 		}
 		if (view.getId() == R.id.licence_disagree_button) {

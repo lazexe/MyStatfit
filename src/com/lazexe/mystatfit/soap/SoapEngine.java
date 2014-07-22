@@ -48,8 +48,6 @@ public class SoapEngine {
 			executable.startShowProgress();
 			super.onPreExecute();
 		}
-		
-		
 
 	}
 }

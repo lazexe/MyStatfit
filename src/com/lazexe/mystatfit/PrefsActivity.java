@@ -7,8 +7,6 @@ import com.lazexe.mystatfit.fragments.PrefFragment;
 
 public class PrefsActivity extends PreferenceActivity {
 
-	private static final String TAG = PrefsActivity.class.getName();
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
