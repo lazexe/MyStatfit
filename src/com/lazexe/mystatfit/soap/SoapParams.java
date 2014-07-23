@@ -23,7 +23,7 @@ public class SoapParams {
 		this.soapAction = soapAction;
 	}
 
-	public String getMethdName() {
+	public String getMethodName() {
 		return methodName;
 	}
 

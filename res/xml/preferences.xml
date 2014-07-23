@@ -1,56 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    
-    
-    <PreferenceCategory
-        android:title="@string/account">
-        
-        <Preference 
+
+    <PreferenceCategory android:title="@string/account" >
+        <Preference
             android:key="@string/logout"
-            android:title="@string/logout"
-            android:summary="@string/logout_description"/>
-        
-        <Preference 
+            android:summary="@string/logout_description"
+            android:title="@string/logout" />
+        <Preference
             android:key="@string/edit"
-            android:title="@string/edit"
-            android:summary="@string/edit_description"/>
-        
+            android:summary="@string/edit_description"
+            android:title="@string/edit" />
     </PreferenceCategory>
-    
-    <PreferenceCategory 
-        android:title="@string/user">
-        
-        <EditTextPreference 
-            android:key="@string/weight"
-            android:title="@string/weight"
+    <PreferenceCategory android:title="@string/user" >
+        <EditTextPreference
             android:defaultValue="75"
-            android:summary="@string/weight_description"/>
-        
-        <EditTextPreference 
-            android:key="@string/height"
-            android:title="@string/height"
+            android:key="@string/weight"
+            android:summary="@string/weight_description"
+            android:title="@string/weight" />
+        <EditTextPreference
             android:defaultValue="175"
-            android:summary="@string/height_description"/>
-        
+            android:key="@string/height"
+            android:summary="@string/height_description"
+            android:title="@string/height" />
+        <EditTextPreference
+            android:defaultValue="60"
+            android:key="@string/step_length"
+            android:summary="@string/step_length_description"
+            android:title="@string/step_length" />
     </PreferenceCategory>
-    
-    <PreferenceCategory
-        android:title="@string/information">
-        
-        
-        <Preference 
-            android:title="@string/developer"
-            android:summary="@string/maxim_lazarenko"/>
-        
-        <Preference 
-            android:title="@string/support"
-            android:summary="@string/lazexe_email_address"/>
-        
-        <Preference 
-            android:title="@string/version"
-            android:summary="@string/app_version"/>
-        
+    <PreferenceCategory android:title="@string/information" >
+        <Preference
+            android:summary="@string/maxim_lazarenko"
+            android:title="@string/developer" />
+        <Preference
+            android:summary="@string/lazexe_email_address"
+            android:title="@string/support" />
+        <Preference
+            android:summary="@string/app_version"
+            android:title="@string/version" />
     </PreferenceCategory>
-        
 
 </PreferenceScreen>

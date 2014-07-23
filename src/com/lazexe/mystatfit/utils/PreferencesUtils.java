@@ -1,7 +1,5 @@
 package com.lazexe.mystatfit.utils;
 
-import com.lazexe.mystatfit.R;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 

@@ -27,7 +27,7 @@ public abstract class AbstractCommandObject {
 		envelope.encodingStyle = SoapSerializationEnvelope.ENC;
 		envelope.env = SoapSerializationEnvelope.ENV;
 		envelope.implicitTypes = true;
-		request = new SoapObject(params.getNamespace(), params.getMethdName());
+		request = new SoapObject(params.getNamespace(), params.getMethodName());
 		envelope.setOutputSoapObject(request);
 		androidHttpTransport = new HttpTransportSE(params.getUrl());
 		androidHttpTransport.debug = true;

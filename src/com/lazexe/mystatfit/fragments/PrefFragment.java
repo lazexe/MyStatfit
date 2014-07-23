@@ -3,6 +3,9 @@ package com.lazexe.mystatfit.fragments;
 import com.lazexe.mystatfit.EditUserInformationActivity;
 import com.lazexe.mystatfit.LoginActivity;
 import com.lazexe.mystatfit.R;
+import com.lazexe.mystatfit.soap.SoapEngine;
+import com.lazexe.mystatfit.soap.SoapParams;
+import com.lazexe.mystatfit.soap.UserFeatureEditor;
 import com.lazexe.mystatfit.utils.PreferencesUtils;
 
 import android.app.Activity;
@@ -73,9 +76,31 @@ public class PrefFragment extends PreferenceFragment implements
 
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
-		Log.d(TAG, "Preference change: " + preference.getKey());
-		Log.d(TAG, "New value: " + (String)newValue);
-		return false;
+		String key = preference.getKey();
+		String data = (String) newValue;
+		String login = PreferencesUtils.getUserLogin(getActivity());
+		String password = PreferencesUtils.getUserPassword(getActivity());
+		SoapParams params;
+		String url = "http://mystatfit.com/aut/";
+		String namespace = "http://mystatfit.com/";
+		String soapAction = null;
+		String methodName = null;
+		if (key.equals(getString(R.string.height))) {
+			soapAction = "http://mystatfit.com/Rost";
+			methodName = "Rost";
+		} else if (key.equals(getString(R.string.weight))) {
+			soapAction = "http://mystatfit.com/Weight";
+			methodName = "Weight";
+		} else if (key.equals(getString(R.string.step_length))) {
+			// TODO if need to keep this on remote server
+			return false;
+		} else {
+			return false;
+		}
+		params = new SoapParams(soapAction, methodName, namespace, url);
+		SoapEngine engine = SoapEngine.getInstance();
+		engine.runCommand(new UserFeatureEditor(params, getActivity(), login, password, data));
+		return true;
 	}
 
 }

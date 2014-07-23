@@ -52,6 +52,9 @@
     <string name="height">Height</string>
     <string name="height_description">Set your height</string>
     <string name="speed">Speed</string>
+    <string name="step_length">Step length</string>
+    <string name="step_length_description">Set your step length</string>
+    <string name="success">Success!</string>
         
 	<string name="trainings">Trainings</string>
 	<string name="running">Running</string>
