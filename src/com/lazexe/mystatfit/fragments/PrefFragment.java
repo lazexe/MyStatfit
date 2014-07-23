@@ -11,11 +11,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.util.Log;
 
 public class PrefFragment extends PreferenceFragment implements
-		OnPreferenceClickListener {
+		OnPreferenceClickListener, OnPreferenceChangeListener {
+	
+	private static final String TAG = PrefFragment.class.getName();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,11 @@ public class PrefFragment extends PreferenceFragment implements
 		Preference editPreference = findPreference(getString(R.string.edit));
 		editPreference.setTitle(sBuilder.toString());
 		editPreference.setOnPreferenceClickListener(this);
+		
+		Preference weightPreference = findPreference(getString(R.string.weight));
+		weightPreference.setOnPreferenceChangeListener(this);
+		Preference heightPreference = findPreference(getString(R.string.height));
+		heightPreference.setOnPreferenceChangeListener(this);
 	}
 
 	@Override
@@ -59,6 +68,13 @@ public class PrefFragment extends PreferenceFragment implements
 			startActivity(editActivityIntent);
 		}
 		
+		return false;
+	}
+
+	@Override
+	public boolean onPreferenceChange(Preference preference, Object newValue) {
+		Log.d(TAG, "Preference change: " + preference.getKey());
+		Log.d(TAG, "New value: " + (String)newValue);
 		return false;
 	}
 
