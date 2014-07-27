@@ -14,17 +14,17 @@
     <PreferenceCategory android:title="@string/user" >
         <EditTextPreference
             android:defaultValue="75"
-            android:key="@string/weight"
+            android:key="Weight"
             android:summary="@string/weight_description"
             android:title="@string/weight" />
         <EditTextPreference
             android:defaultValue="175"
-            android:key="@string/height"
+            android:key="Height"
             android:summary="@string/height_description"
             android:title="@string/height" />
         <EditTextPreference
             android:defaultValue="60"
-            android:key="@string/step_length"
+            android:key="StepLength"
             android:summary="@string/step_length_description"
             android:title="@string/step_length" />
     </PreferenceCategory>

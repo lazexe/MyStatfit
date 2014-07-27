@@ -97,7 +97,7 @@ public class Editor extends AbstractCommandObject implements
 			} else {
 				activity.finish();
 				SharedPreferences prefs = activity.getSharedPreferences(Constants.PREFS_USER_DATA_KEY, Context.MODE_PRIVATE);
-				prefs.edit().putString("Login", newLogin).commit();
+				prefs.edit().putString(Constants.PREFS_LOGIN_KEY, newLogin).commit();
 				prefs.edit().putString(Constants.PREFS_GENDER_KEY, gender).commit();
 				Calendar calendar = Calendar.getInstance();
 				int currentYear = calendar.get(Calendar.YEAR);

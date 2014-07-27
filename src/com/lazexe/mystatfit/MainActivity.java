@@ -12,8 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,8 +22,11 @@ import com.lazexe.mystatfit.adapters.DrawerItem;
 import com.lazexe.mystatfit.adapters.NavigationDrawerAdapter;
 import com.lazexe.mystatfit.fragments.RunFragment;
 import com.lazexe.mystatfit.fragments.WelcomeFragment;
+import com.lazexe.mystatfit.utils.PreferencesUtils;
 
 public class MainActivity extends Activity {
+
+	private static final String TAG = MainActivity.class.getName();
 
 	private MainActivity activity;
 	private FragmentTransaction fragmentTransaction;
@@ -43,6 +45,7 @@ public class MainActivity extends Activity {
 		WelcomeFragment welcomeFragment = new WelcomeFragment();
 		fragmentTransaction.replace(R.id.content_frame, welcomeFragment);
 		fragmentTransaction.commit();
+		Log.d(TAG, PreferencesUtils.getStepLength(this));
 	}
 
 	private void initControls() {
@@ -200,7 +203,6 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (drawerToggle.onOptionsItemSelected(item))
 			return true;
-
 		return false;
 	}
 

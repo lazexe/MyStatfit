@@ -10,4 +10,5 @@ public class Constants {
 	public static final String PREFS_WEIGHT_KEY = "Weight";
 	public static final String PREFS_HEIGHT_KEY = "Height";
 	public static final String PREFS_AGE_KEY = "Age";
+	public static final String PREFS_STEP_LENGTH_KEY = "StepLength";
 }
