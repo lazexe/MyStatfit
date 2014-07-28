@@ -43,6 +43,8 @@ public class PostTrainingFragment extends Fragment implements OnClickListener  {
 	private RatingBar sentimentRating;
 	private EditText pulseEditText;
 	private Spinner weatherSpinner;
+	private EditText temperatureEditText;
+	private EditText coverEditText;
 	
 	private Button acceptButton;
 	private Button cancelButton;
@@ -64,6 +66,8 @@ public class PostTrainingFragment extends Fragment implements OnClickListener  {
 		weatherSpinner = (Spinner) view.findViewById(R.id.weather_spinner);
 		acceptButton = (Button) view.findViewById(R.id.accept_post_training_button);
 		cancelButton = (Button) view.findViewById(R.id.cancel_post_training_button);
+		coverEditText = (EditText) view.findViewById(R.id.cover_edittext);
+		temperatureEditText = (EditText) view.findViewById(R.id.temperature_edittext);
 		
 		acceptButton.setOnClickListener(this);
 		cancelButton.setOnClickListener(this);
@@ -132,6 +136,23 @@ public class PostTrainingFragment extends Fragment implements OnClickListener  {
 	}
 	
 	private boolean checkFragmentFields() {
+		
+		if (isFieldEmpty(pulseEditText))
+			return false;
+		if (isFieldEmpty(coverEditText))
+			return false;
+		if (isFieldEmpty(temperatureEditText))
+			return false;
+		
 		return true;
+	}
+	
+	private boolean isFieldEmpty(EditText field) {
+		if (field.getText().toString().isEmpty()) {
+			field.setError(getActivity().getString(R.string.error_empty_field));
+			field.requestFocus();
+			return true;
+		}
+		return false;
 	}
 }
