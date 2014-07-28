@@ -88,6 +88,8 @@
         <string name="pulse">Pulse</string>
         <string name="weather">Weather</string>
         <string name="cancel">Cancel</string>
+        <string name="confirm">Confirm</string>
+        <string name="confirm_cancel_save_training"> The result is not saved! Sure to cancel?</string>
 	
 
 </resources>

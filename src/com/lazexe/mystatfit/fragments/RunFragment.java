@@ -1,9 +1,12 @@
 package com.lazexe.mystatfit.fragments;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +32,9 @@ public class RunFragment extends Fragment implements OnClickListener {
 	private static final String TAG = RunFragment.class.getName();
 	private static float ACTIVITY_COEFFICIENT = 1.752F;
 
+	private long startDateInMills;
+	private long endDateInMills;
+
 	TextView stepsTextView;
 	TextView caloriesTextView;
 	TextView speedTextView;
@@ -47,9 +53,9 @@ public class RunFragment extends Fragment implements OnClickListener {
 	private int gender;
 
 	private Timer timer;
-	private int hours;
-	private int minutes;
-	private int seconds;
+	private int durationHours;
+	private int durationMinutes;
+	private int durationSeconds;
 
 	private Handler updateDisplay;
 
@@ -62,11 +68,16 @@ public class RunFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		stepLength = Integer.parseInt(PreferencesUtils.getStepLength(getActivity().getApplicationContext()));
-		weight = Integer.parseInt(PreferencesUtils.getUserWeight(getActivity().getApplicationContext()));
-		height = Integer.parseInt(PreferencesUtils.getUserHeight(getActivity().getApplicationContext()));
-		gender = PreferencesUtils.getUserGender(getActivity().getApplicationContext());
-		age = PreferencesUtils.getUserAge(getActivity().getApplicationContext());
+		stepLength = Integer.parseInt(PreferencesUtils
+				.getStepLength(getActivity().getApplicationContext()));
+		weight = Integer.parseInt(PreferencesUtils.getUserWeight(getActivity()
+				.getApplicationContext()));
+		height = Integer.parseInt(PreferencesUtils.getUserHeight(getActivity()
+				.getApplicationContext()));
+		gender = PreferencesUtils.getUserGender(getActivity()
+				.getApplicationContext());
+		age = PreferencesUtils
+				.getUserAge(getActivity().getApplicationContext());
 		startButton = (ImageButton) view
 				.findViewById(R.id.start_count_steps_button);
 		lockButton = (ImageButton) view
@@ -113,15 +124,18 @@ public class RunFragment extends Fragment implements OnClickListener {
 	}
 
 	private void startCountSteps() {
-		Intent startIntent = new Intent(getActivity(),
-				StepCounterService.class);
+		steps = 0;
+
+		Intent startIntent = new Intent(getActivity(), StepCounterService.class);
 		getActivity().startService(startIntent);
 		getActivity().bindService(startIntent, new StepServiceConnection(),
 				Context.BIND_AUTO_CREATE);
 		timer = new Timer();
 		timer.schedule(task, 1000, 1000);
+		Calendar calendar = Calendar.getInstance();
+		startDateInMills = calendar.getTimeInMillis();
 	}
-	
+
 	private void lockScreenFromTouch() {
 		startButton.setEnabled(!startButton.isEnabled());
 		stopButton.setEnabled(!stopButton.isEnabled());
@@ -131,12 +145,28 @@ public class RunFragment extends Fragment implements OnClickListener {
 			getActivity().getActionBar().show();
 		}
 	}
-	
+
 	private void stopCountSteps() {
-		Intent stopIntent = new Intent(getActivity(),
-				StepCounterService.class);
+		Intent stopIntent = new Intent(getActivity(), StepCounterService.class);
 		getActivity().stopService(stopIntent);
 		timer.cancel();
+		Bundle bundle = new Bundle();
+		bundle.putLong(PostTrainingFragment.START_DATE_KEY, startDateInMills);
+		bundle.putLong(PostTrainingFragment.END_DATE_KEY, endDateInMills);
+		bundle.putInt(PostTrainingFragment.DURATION_HOURS_KEY, durationHours);
+		bundle.putInt(PostTrainingFragment.DURATION_MINUTES_KEY,
+				durationMinutes);
+		bundle.putInt(PostTrainingFragment.DURATION_SECONDS_KEY,
+				durationSeconds);
+		bundle.putInt(PostTrainingFragment.STEPS_KEY, steps);
+		bundle.putInt(PostTrainingFragment.CALORIES_KEY, calories);
+		PostTrainingFragment postFragment = new PostTrainingFragment();
+		postFragment.setArguments(bundle);
+		FragmentManager fragmentManager = getActivity().getFragmentManager();
+		fragmentManager.beginTransaction()
+				.replace(R.id.content_frame, postFragment).commit();
+		Calendar calendar = Calendar.getInstance();
+		endDateInMills = calendar.getTimeInMillis();
 	}
 
 	private TimerTask task = new TimerTask() {
@@ -147,66 +177,63 @@ public class RunFragment extends Fragment implements OnClickListener {
 
 				float distance = 0;
 				float elapsedTimeInSeconds = 0;
-				
+
 				@Override
 				public void run() {
-					seconds++;
-					if (seconds == 60) {
-						seconds = 0;
-						minutes++;
+					durationSeconds++;
+					if (durationSeconds == 60) {
+						durationSeconds = 0;
+						durationMinutes++;
 					}
-					if (minutes == 60) {
-						minutes = 0;
-						hours++;
-					}
-					
-					if (steps > 0) {
-						distance = steps * stepLength / 100;
-						elapsedTimeInSeconds = hours * 3600 + minutes * 60 + seconds;
-						speed = distance / elapsedTimeInSeconds;
-						Log.d(TAG, "Steps" + String.valueOf(steps));
-						Log.d(TAG, "Step length " +  String.valueOf(stepLength));
-						Log.d(TAG, "Distance " + String.valueOf(distance));
-						Log.d(TAG, "Elapsed time " + String.valueOf(elapsedTimeInSeconds));
-						Log.d(TAG, "Speed " + String.valueOf(speed));
-						//speed = (int) ((((hours / 3600) + (minutes / 60) + seconds) / steps) * 60);
+					if (durationMinutes == 60) {
+						durationMinutes = 0;
+						durationHours++;
 					}
 
-					
+					if (steps > 0) {
+						distance = steps * stepLength / 100;
+						elapsedTimeInSeconds = durationHours * 3600
+								+ durationMinutes * 60 + durationSeconds;
+						speed = distance / elapsedTimeInSeconds;
+						Log.d(TAG, "Steps" + String.valueOf(steps));
+						Log.d(TAG, "Step length " + String.valueOf(stepLength));
+						Log.d(TAG, "Distance " + String.valueOf(distance));
+						Log.d(TAG,
+								"Elapsed time "
+										+ String.valueOf(elapsedTimeInSeconds));
+						Log.d(TAG, "Speed " + String.valueOf(speed));
+						// speed = (int) ((((hours / 3600) + (minutes / 60) +
+						// seconds) / steps) * 60);
+					}
+
 					Log.d(TAG, "Weight " + String.valueOf(weight));
 					Log.d(TAG, "Height " + String.valueOf(height));
 					Log.d(TAG, "Age " + String.valueOf(age));
 					Log.d(TAG, "Coef" + String.valueOf(ACTIVITY_COEFFICIENT));
-					 //Women
-					if(gender == 0){
-						calories +=
-						(int)(((((655+(9.6*weight)+(1.8*height)-(4.7*age))*ACTIVITY_COEFFICIENT)/24)/3600)
-						*(seconds));
-					}/*men*/ else{
-						calories +=
-						(int)(((((66+(13.7*weight)+(5*height)-(6.8*age))*ACTIVITY_COEFFICIENT)/24)/3600)
-						*(seconds));
+					// Women
+					if (gender == 0) {
+						calories += (int) (((((655 + (9.6 * weight)
+								+ (1.8 * height) - (4.7 * age)) * ACTIVITY_COEFFICIENT) / 24) / 3600) * (durationSeconds));
+					}/* men */else {
+						calories += (int) (((((66 + (13.7 * weight)
+								+ (5 * height) - (6.8 * age)) * ACTIVITY_COEFFICIENT) / 24) / 3600) * (durationSeconds));
 					}
 					Log.d(TAG, "Calories: " + calories);
+					stepsTextView.setText(String.valueOf(steps));
 					caloriesTextView.setText(String.valueOf(calories));
 					speedTextView.setText(String.valueOf(speed));
-					timeTextView.setText(String.valueOf(hours) + " : "
-							+ String.valueOf(minutes) + " : "
-							+ String.valueOf(seconds));
+					timeTextView.setText(String.valueOf(durationHours) + " : "
+							+ String.valueOf(durationMinutes) + " : "
+							+ String.valueOf(durationSeconds));
 				}
 			});
 		}
 	};
-	
-	
 
 	@Override
 	public void onStop() {
 		super.onStop();
-		//TODO
 	}
-
-
 
 	class StepServiceConnection implements ServiceConnection {
 
