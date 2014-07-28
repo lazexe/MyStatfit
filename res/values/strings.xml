@@ -79,6 +79,15 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
+    
+    <string-array name="weather_type">
+        <item>Sunny</item>
+        <item>Raining</item>
+    </string-array>
+        <string name="sentiment">Sentiment</string>
+        <string name="pulse">Pulse</string>
+        <string name="weather">Weather</string>
+        <string name="cancel">Cancel</string>
 	
 
 </resources>
