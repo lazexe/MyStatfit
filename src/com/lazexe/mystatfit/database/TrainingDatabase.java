@@ -34,6 +34,7 @@ public class TrainingDatabase extends SQLiteOpenHelper {
 			"duration_minutes",
 			"duration_seconds",
 			"steps",
+			"distance",
 			"pulse",
 			"calories",
 			"cover",

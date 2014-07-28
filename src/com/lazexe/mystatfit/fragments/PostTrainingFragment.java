@@ -28,6 +28,7 @@ public class PostTrainingFragment extends Fragment implements OnClickListener  {
 	public static String DURATION_MINUTES_KEY = "durationMinutes";
 	public static String DURATION_SECONDS_KEY = "durationSeconds";
 	public static String STEPS_KEY = "steps";
+	public static String DISTANCE_KEY = "distance";
 	public static String CALORIES_KEY = "calories";
 	
 	private long startDateInMills;
@@ -36,6 +37,7 @@ public class PostTrainingFragment extends Fragment implements OnClickListener  {
 	private int durationMinutes;
 	private int durationSeconds;
 	private int steps;
+	private float distance;
 	private int calories;
 	
 	private RatingBar sentimentRating;
@@ -74,6 +76,7 @@ public class PostTrainingFragment extends Fragment implements OnClickListener  {
 		durationSeconds = bundle.getInt(DURATION_SECONDS_KEY);
 		steps = bundle.getInt(STEPS_KEY);
 		calories = bundle.getInt(CALORIES_KEY);
+		distance = bundle.getFloat(DISTANCE_KEY);
 	}
 
 	@Override
@@ -81,7 +84,8 @@ public class PostTrainingFragment extends Fragment implements OnClickListener  {
 		int id = v.getId();
 		switch (id) {
 		case R.id.accept_post_training_button:
-			save();
+			if (checkFragmentFields())
+				save();
 			break;
 		case R.id.cancel_post_training_button:
 			showConfirmDialog();
@@ -125,5 +129,9 @@ public class PostTrainingFragment extends Fragment implements OnClickListener  {
 		builder.setCancelable(false);
 		AlertDialog dialog = builder.create();
 		dialog.show();
+	}
+	
+	private boolean checkFragmentFields() {
+		return true;
 	}
 }

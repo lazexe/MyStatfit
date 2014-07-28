@@ -46,6 +46,7 @@ public class RunFragment extends Fragment implements OnClickListener {
 	private static int steps;
 	private static int calories;
 	private float speed;
+	private float distance;
 	private float stepLength;
 	private int weight;
 	private int height;
@@ -125,7 +126,7 @@ public class RunFragment extends Fragment implements OnClickListener {
 
 	private void startCountSteps() {
 		steps = 0;
-
+		distance = 0;
 		Intent startIntent = new Intent(getActivity(), StepCounterService.class);
 		getActivity().startService(startIntent);
 		getActivity().bindService(startIntent, new StepServiceConnection(),
@@ -160,6 +161,7 @@ public class RunFragment extends Fragment implements OnClickListener {
 				durationSeconds);
 		bundle.putInt(PostTrainingFragment.STEPS_KEY, steps);
 		bundle.putInt(PostTrainingFragment.CALORIES_KEY, calories);
+		bundle.putFloat(PostTrainingFragment.DISTANCE_KEY, distance);
 		PostTrainingFragment postFragment = new PostTrainingFragment();
 		postFragment.setArguments(bundle);
 		FragmentManager fragmentManager = getActivity().getFragmentManager();
@@ -175,7 +177,6 @@ public class RunFragment extends Fragment implements OnClickListener {
 		public void run() {
 			getActivity().runOnUiThread(new Runnable() {
 
-				float distance = 0;
 				float elapsedTimeInSeconds = 0;
 
 				@Override
