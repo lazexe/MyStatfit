@@ -12,9 +12,9 @@ public class TrainingDatabase extends SQLiteOpenHelper {
 	private static final String DB_NAME = "training_database.db";
 	private static final int DB_VERSION = 1;
 	
-	private static final String RUN_TABLE_NAME = "run_table";
+	public static final String RUN_TABLE_NAME = "run_table";
 	
-	private String[] runTableFields = 
+	public static String[] runTableFields = 
 		{
 			"_id", 
 			"user_id",
