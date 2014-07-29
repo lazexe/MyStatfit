@@ -128,7 +128,6 @@ public class PostTrainingFragment extends Fragment implements OnClickListener  {
 			TrainingDatabase trainingDatabase = new TrainingDatabase(getActivity());
 			SQLiteDatabase sqLiteDatabase = trainingDatabase.getWritableDatabase();
 			ContentValues values = new ContentValues();
-			Calendar c = Calendar.getInstance();
 			java.util.Date startDate = new Date(startDateInMills);
 			java.util.Date endDate = new Date(endDateInMills);
 			values.put(TrainingDatabase.runTableFields[1], PreferencesUtils.getUserLogin(getActivity()));
@@ -156,6 +155,8 @@ public class PostTrainingFragment extends Fragment implements OnClickListener  {
 			values.put(TrainingDatabase.runTableFields[23], temperatureEditText.getText().toString());
 			values.put(TrainingDatabase.runTableFields[24], weatherSpinner.getSelectedItem().toString());
 			sqLiteDatabase.insert(TrainingDatabase.RUN_TABLE_NAME, null, values);
+			sqLiteDatabase.close();
+			trainingDatabase.close();
 	}
 	
 	private void showConfirmDialog() {
