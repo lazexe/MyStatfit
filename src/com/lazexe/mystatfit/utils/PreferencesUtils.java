@@ -50,4 +50,9 @@ public class PreferencesUtils {
 			return 0;
 		}
 	}
+	
+	public static boolean isUserTrains(Context context) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		return prefs.getBoolean(Constants.PREF_IS_TRAINING_RUN_KEY, false);
+	}
 }

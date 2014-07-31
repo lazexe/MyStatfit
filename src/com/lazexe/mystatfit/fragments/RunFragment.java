@@ -11,10 +11,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +27,7 @@ import android.widget.TextView;
 
 import com.lazexe.mystatfit.R;
 import com.lazexe.mystatfit.step.StepCounterService;
+import com.lazexe.mystatfit.utils.Constants;
 import com.lazexe.mystatfit.utils.PreferencesUtils;
 
 public class RunFragment extends Fragment implements OnClickListener {
@@ -111,6 +114,8 @@ public class RunFragment extends Fragment implements OnClickListener {
 		switch (id) {
 		case R.id.start_count_steps_button:
 			startCountSteps();
+			SharedPreferences prefs =PreferenceManager.getDefaultSharedPreferences(getActivity());
+			prefs.edit().putBoolean(Constants.PREF_IS_TRAINING_RUN_KEY, true).commit();
 			break;
 		case R.id.lock_count_steps_button:
 			lockScreenFromTouch();
@@ -129,7 +134,7 @@ public class RunFragment extends Fragment implements OnClickListener {
 		distance = 0;
 		Intent startIntent = new Intent(getActivity(), StepCounterService.class);
 		getActivity().startService(startIntent);
-		getActivity().bindService(startIntent, new StepServiceConnection(),
+		getActivity().bindService(startIntent, stepServiceConnection,
 				Context.BIND_AUTO_CREATE);
 		timer = new Timer();
 		timer.schedule(task, 1000, 1000);
@@ -148,6 +153,8 @@ public class RunFragment extends Fragment implements OnClickListener {
 	}
 
 	private void stopCountSteps() {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		prefs.edit().putBoolean(Constants.PREF_IS_TRAINING_RUN_KEY, false).commit();
 		Intent stopIntent = new Intent(getActivity(), StepCounterService.class);
 		getActivity().stopService(stopIntent);
 		timer.cancel();
@@ -219,6 +226,7 @@ public class RunFragment extends Fragment implements OnClickListener {
 						calories += (int) (((((66 + (13.7 * weight)
 								+ (5 * height) - (6.8 * age)) * ACTIVITY_COEFFICIENT) / 24) / 3600) * (durationSeconds));
 					}
+					
 					Log.d(TAG, "Calories: " + calories);
 					stepsTextView.setText(String.valueOf(steps));
 					caloriesTextView.setText(String.valueOf(calories));
@@ -234,15 +242,25 @@ public class RunFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onStop() {
 		super.onStop();
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		prefs.edit().putBoolean(Constants.PREF_IS_TRAINING_RUN_KEY, false).commit();
+		try {
+		getActivity().unbindService(stepServiceConnection);
+		} catch (Exception e) {
+			Log.d(TAG, e.getMessage());
+		}
+		Intent stepCounterServiceIntent = new Intent(getActivity(), StepCounterService.class);
+		try {
+		getActivity().stopService(stepCounterServiceIntent);
+		} catch (Exception e) {
+			Log.d(TAG, e.getMessage());
+		}
+		task.cancel();
+		steps = 0;
+		calories = 0;
 	}
 
-	class StepServiceConnection implements ServiceConnection {
-
-		private final String TAG;
-
-		public StepServiceConnection() {
-			TAG = StepServiceConnection.class.getName();
-		}
+	private final ServiceConnection stepServiceConnection = new ServiceConnection() {
 
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
@@ -253,8 +271,8 @@ public class RunFragment extends Fragment implements OnClickListener {
 
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
-
+			
 		}
 
-	}
+	};
 }

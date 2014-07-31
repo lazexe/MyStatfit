@@ -11,4 +11,6 @@ public class Constants {
 	public static final String PREFS_HEIGHT_KEY = "Height";
 	public static final String PREFS_AGE_KEY = "Age";
 	public static final String PREFS_STEP_LENGTH_KEY = "StepLength";
+	
+	public static final String PREF_IS_TRAINING_RUN_KEY = "isTrainingRun";
 }

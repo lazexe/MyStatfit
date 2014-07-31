@@ -138,15 +138,46 @@ public class MainActivity extends Activity {
 	private class DrawerItemClickListener implements
 			ListView.OnItemClickListener {
 		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position,
+		public void onItemClick(AdapterView<?> parent, View view, final int position,
 				long id) {
 			if (dataList.get(position).getTitle() == null) {
-				selectItem(position);
+				
+				boolean isTrainingGoes = PreferencesUtils.isUserTrains(activity);
+				if (isTrainingGoes) {
+					AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+					builder.setTitle(getString(R.string.sure_exit));
+					builder.setMessage(getString(R.string.sure_close_training));
+					builder.setPositiveButton(getString(android.R.string.yes),
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									selectItem(position);
+									dialog.cancel();
+								}
+							});
+					builder.setNegativeButton(getString(android.R.string.cancel),
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									return;
+								}
+							});
+					builder.setCancelable(false);
+					AlertDialog dialog = builder.create();
+					dialog.show();
+				} else {
+					selectItem(position);
+				}
 			}
 		}
 	}
 
 	private void selectItem(int position) {
+
+		
+
 		drawerList.setItemChecked(position, true);
 		drawerLayout.closeDrawer(drawerList);
 		getActionBar().setTitle(dataList.get(position).getItemName());

@@ -91,6 +91,7 @@
         <string name="confirm">Confirm</string>
         <string name="confirm_cancel_save_training"> The result is not saved! Sure to cancel?</string>
         <string name="error_empty_field">Empty field!</string>
+        <string name="sure_close_training">Sure close training?</string>
 	
 
 </resources>

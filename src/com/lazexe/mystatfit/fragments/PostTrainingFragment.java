@@ -10,6 +10,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -155,6 +156,7 @@ public class PostTrainingFragment extends Fragment implements OnClickListener  {
 			values.put(TrainingDatabase.runTableFields[23], temperatureEditText.getText().toString());
 			values.put(TrainingDatabase.runTableFields[24], weatherSpinner.getSelectedItem().toString());
 			sqLiteDatabase.insert(TrainingDatabase.RUN_TABLE_NAME, null, values);
+			Log.d(TAG, "Save to DB");
 			sqLiteDatabase.close();
 			trainingDatabase.close();
 	}
