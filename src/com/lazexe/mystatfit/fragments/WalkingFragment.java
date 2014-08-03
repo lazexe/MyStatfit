@@ -23,18 +23,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lazexe.mystatfit.R;
+import com.lazexe.mystatfit.database.TrainingDatabase;
 import com.lazexe.mystatfit.step.StepCounterService;
 import com.lazexe.mystatfit.utils.Constants;
 import com.lazexe.mystatfit.utils.PreferencesUtils;
 
-public class RunFragment extends Fragment implements OnClickListener {
+public class WalkingFragment extends Fragment implements OnClickListener {
 
-	private static final String TAG = RunFragment.class.getName();
+	private static final String TAG = WalkingFragment.class.getName();
 	private static float ACTIVITY_COEFFICIENT = 1.752F;
 
 	private long startDateInMills;
@@ -47,6 +49,7 @@ public class RunFragment extends Fragment implements OnClickListener {
 	ImageButton startButton;
 	ImageButton lockButton;
 	ImageButton stopButton;
+	Button startTrainingButton;
 
 	private static int steps;
 	private static int calories;
@@ -64,6 +67,8 @@ public class RunFragment extends Fragment implements OnClickListener {
 	private int durationSeconds;
 
 	private Handler updateDisplay;
+
+	private boolean paused;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,13 +95,22 @@ public class RunFragment extends Fragment implements OnClickListener {
 				.findViewById(R.id.lock_count_steps_button);
 		stopButton = (ImageButton) view
 				.findViewById(R.id.stop_count_steps_button);
+		startTrainingButton = (Button) view
+				.findViewById(R.id.start_walking_training_button);
 		stepsTextView = (TextView) view.findViewById(R.id.steps_textview);
 		caloriesTextView = (TextView) view.findViewById(R.id.calories_textview);
 		timeTextView = (TextView) view.findViewById(R.id.time_textview);
 		speedTextView = (TextView) view.findViewById(R.id.speed_textview);
+		setControlsButtonsVisibility(View.INVISIBLE);
 		startButton.setOnClickListener(this);
 		lockButton.setOnClickListener(this);
 		stopButton.setOnClickListener(this);
+		startTrainingButton.setOnClickListener(this);
+		stepsTextView.setText("0");
+		caloriesTextView.setText("0");
+		timeTextView.setText("00:00:00");
+		speedTextView.setText("0.0");
+		paused = true;
 		updateDisplay = new Handler() {
 
 			@Override
@@ -113,16 +127,18 @@ public class RunFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onClick(View view) {
 		int id = view.getId();
-		ImageButton clickdButton = null;
+		ImageButton clickedButton = null;
 		if (view instanceof ImageButton) {
-			clickdButton = (ImageButton) view;
+			clickedButton = (ImageButton) view;
 		}
 		switch (id) {
+		case R.id.start_walking_training_button:
+			startTrainingButton.setVisibility(View.INVISIBLE);
+			setControlsButtonsVisibility(View.VISIBLE);
+			start(clickedButton);
+			break;
 		case R.id.start_count_steps_button:
-			lockScreenFromTouch();
-			startCountSteps();
-			SharedPreferences prefs =PreferenceManager.getDefaultSharedPreferences(getActivity());
-			prefs.edit().putBoolean(Constants.PREF_IS_TRAINING_RUN_KEY, true).commit();
+			start(clickedButton);
 			break;
 		case R.id.lock_count_steps_button:
 			lockScreenFromTouch();
@@ -134,6 +150,36 @@ public class RunFragment extends Fragment implements OnClickListener {
 			Log.d(TAG, "onClick DEFAULT");
 			break;
 		}
+	}
+
+	private void start(ImageButton clickedButton) {
+		String contentdescription = (String) clickedButton
+				.getContentDescription();
+		if (contentdescription.equals(getActivity().getString(R.string.play))) {
+			paused = false;
+			clickedButton.setImageDrawable(getActivity().getResources()
+					.getDrawable(android.R.drawable.ic_media_pause));
+			clickedButton.setContentDescription(getActivity().getString(
+					R.string.pause));
+			lockScreenFromTouch();
+			startCountSteps();
+			SharedPreferences prefs = PreferenceManager
+					.getDefaultSharedPreferences(getActivity());
+			prefs.edit().putBoolean(Constants.PREF_IS_TRAINING_RUN_KEY, true)
+					.commit();
+		} else {
+			paused = true;
+			clickedButton.setImageDrawable(getActivity().getResources()
+					.getDrawable(android.R.drawable.ic_media_play));
+			clickedButton.setContentDescription(getActivity().getString(
+					R.string.play));
+		}
+	}
+
+	private void setControlsButtonsVisibility(int visibility) {
+		startButton.setVisibility(visibility);
+		lockButton.setVisibility(visibility);
+		stopButton.setVisibility(visibility);
 	}
 
 	private void startCountSteps() {
@@ -153,16 +199,13 @@ public class RunFragment extends Fragment implements OnClickListener {
 	private void lockScreenFromTouch() {
 		startButton.setEnabled(!startButton.isEnabled());
 		stopButton.setEnabled(!stopButton.isEnabled());
-		if (getActivity().getActionBar().isShowing()) {
-			getActivity().getActionBar().hide();
-		} else {
-			getActivity().getActionBar().show();
-		}
 	}
 
 	private void stopCountSteps() {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		prefs.edit().putBoolean(Constants.PREF_IS_TRAINING_RUN_KEY, false).commit();
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(getActivity());
+		prefs.edit().putBoolean(Constants.PREF_IS_TRAINING_RUN_KEY, false)
+				.commit();
 		Intent stopIntent = new Intent(getActivity(), StepCounterService.class);
 		getActivity().stopService(stopIntent);
 		timer.cancel();
@@ -185,7 +228,7 @@ public class RunFragment extends Fragment implements OnClickListener {
 		Calendar calendar = Calendar.getInstance();
 		endDateInMills = calendar.getTimeInMillis();
 	}
-	
+
 	private TimerTask createTimerTask() {
 		TimerTask task = new TimerTask() {
 
@@ -206,27 +249,15 @@ public class RunFragment extends Fragment implements OnClickListener {
 							durationMinutes = 0;
 							durationHours++;
 						}
-
 						if (steps > 0) {
 							distance = steps * stepLength / 100;
 							elapsedTimeInSeconds = durationHours * 3600
 									+ durationMinutes * 60 + durationSeconds;
 							speed = distance / elapsedTimeInSeconds;
-							Log.d(TAG, "Steps" + String.valueOf(steps));
-							Log.d(TAG, "Step length " + String.valueOf(stepLength));
-							Log.d(TAG, "Distance " + String.valueOf(distance));
-							Log.d(TAG,
-									"Elapsed time "
-											+ String.valueOf(elapsedTimeInSeconds));
-							Log.d(TAG, "Speed " + String.valueOf(speed));
-							// speed = (int) ((((hours / 3600) + (minutes / 60) +
+							// speed = (int) ((((hours / 3600) + (minutes / 60)
+							// +
 							// seconds) / steps) * 60);
 						}
-
-						Log.d(TAG, "Weight " + String.valueOf(weight));
-						Log.d(TAG, "Height " + String.valueOf(height));
-						Log.d(TAG, "Age " + String.valueOf(age));
-						Log.d(TAG, "Coef" + String.valueOf(ACTIVITY_COEFFICIENT));
 						// Women
 						if (gender == 0) {
 							calories += (int) (((((655 + (9.6 * weight)
@@ -235,14 +266,13 @@ public class RunFragment extends Fragment implements OnClickListener {
 							calories += (int) (((((66 + (13.7 * weight)
 									+ (5 * height) - (6.8 * age)) * ACTIVITY_COEFFICIENT) / 24) / 3600) * (durationSeconds));
 						}
-						
-						Log.d(TAG, "Calories: " + calories);
+
 						stepsTextView.setText(String.valueOf(steps));
 						caloriesTextView.setText(String.valueOf(calories));
 						speedTextView.setText(String.valueOf(speed));
-						timeTextView.setText(String.valueOf(durationHours) + " : "
-								+ String.valueOf(durationMinutes) + " : "
-								+ String.valueOf(durationSeconds));
+						timeTextView.setText(String.valueOf(durationHours)
+								+ " : " + String.valueOf(durationMinutes)
+								+ " : " + String.valueOf(durationSeconds));
 					}
 				});
 			}
@@ -250,80 +280,24 @@ public class RunFragment extends Fragment implements OnClickListener {
 		return task;
 	}
 
-	private TimerTask task = new TimerTask() {
-
-		@Override
-		public void run() {
-			getActivity().runOnUiThread(new Runnable() {
-
-				float elapsedTimeInSeconds = 0;
-
-				@Override
-				public void run() {
-					durationSeconds++;
-					if (durationSeconds == 60) {
-						durationSeconds = 0;
-						durationMinutes++;
-					}
-					if (durationMinutes == 60) {
-						durationMinutes = 0;
-						durationHours++;
-					}
-
-					if (steps > 0) {
-						distance = steps * stepLength / 100;
-						elapsedTimeInSeconds = durationHours * 3600
-								+ durationMinutes * 60 + durationSeconds;
-						speed = distance / elapsedTimeInSeconds;
-						Log.d(TAG, "Steps" + String.valueOf(steps));
-						Log.d(TAG, "Step length " + String.valueOf(stepLength));
-						Log.d(TAG, "Distance " + String.valueOf(distance));
-						Log.d(TAG,
-								"Elapsed time "
-										+ String.valueOf(elapsedTimeInSeconds));
-						Log.d(TAG, "Speed " + String.valueOf(speed));
-						// speed = (int) ((((hours / 3600) + (minutes / 60) +
-						// seconds) / steps) * 60);
-					}
-
-					Log.d(TAG, "Weight " + String.valueOf(weight));
-					Log.d(TAG, "Height " + String.valueOf(height));
-					Log.d(TAG, "Age " + String.valueOf(age));
-					Log.d(TAG, "Coef" + String.valueOf(ACTIVITY_COEFFICIENT));
-					// Women
-					if (gender == 0) {
-						calories += (int) (((((655 + (9.6 * weight)
-								+ (1.8 * height) - (4.7 * age)) * ACTIVITY_COEFFICIENT) / 24) / 3600) * (durationSeconds));
-					}/* men */else {
-						calories += (int) (((((66 + (13.7 * weight)
-								+ (5 * height) - (6.8 * age)) * ACTIVITY_COEFFICIENT) / 24) / 3600) * (durationSeconds));
-					}
-					
-					Log.d(TAG, "Calories: " + calories);
-					stepsTextView.setText(String.valueOf(steps));
-					caloriesTextView.setText(String.valueOf(calories));
-					speedTextView.setText(String.valueOf(speed));
-					timeTextView.setText(String.valueOf(durationHours) + " : "
-							+ String.valueOf(durationMinutes) + " : "
-							+ String.valueOf(durationSeconds));
-				}
-			});
-		}
-	};
+	private TimerTask task = createTimerTask();
 
 	@Override
 	public void onStop() {
 		super.onStop();
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		prefs.edit().putBoolean(Constants.PREF_IS_TRAINING_RUN_KEY, false).commit();
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(getActivity());
+		prefs.edit().putBoolean(Constants.PREF_IS_TRAINING_RUN_KEY, false)
+				.commit();
 		try {
-		getActivity().unbindService(stepServiceConnection);
+			getActivity().unbindService(stepServiceConnection);
 		} catch (Exception e) {
 			Log.d(TAG, e.getMessage());
 		}
-		Intent stepCounterServiceIntent = new Intent(getActivity(), StepCounterService.class);
+		Intent stepCounterServiceIntent = new Intent(getActivity(),
+				StepCounterService.class);
 		try {
-		getActivity().stopService(stepCounterServiceIntent);
+			getActivity().stopService(stepCounterServiceIntent);
 		} catch (Exception e) {
 			Log.d(TAG, e.getMessage());
 		}
@@ -343,7 +317,7 @@ public class RunFragment extends Fragment implements OnClickListener {
 
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
-			
+
 		}
 
 	};

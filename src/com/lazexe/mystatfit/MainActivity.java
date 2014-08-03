@@ -4,15 +4,17 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,17 +22,15 @@ import android.widget.ListView;
 
 import com.lazexe.mystatfit.adapters.DrawerItem;
 import com.lazexe.mystatfit.adapters.NavigationDrawerAdapter;
-import com.lazexe.mystatfit.fragments.RunFragment;
+import com.lazexe.mystatfit.fragments.WalkingFragment;
 import com.lazexe.mystatfit.fragments.WelcomeFragment;
+import com.lazexe.mystatfit.utils.Constants;
 import com.lazexe.mystatfit.utils.PreferencesUtils;
 
 public class MainActivity extends Activity {
 
-	private static final String TAG = MainActivity.class.getName();
-
 	private MainActivity activity;
 	private FragmentTransaction fragmentTransaction;
-
 	private DrawerLayout drawerLayout;
 	private ListView drawerList;
 	private ActionBarDrawerToggle drawerToggle;
@@ -41,11 +41,9 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initControls();
-		fragmentTransaction = getFragmentManager().beginTransaction();
-		WelcomeFragment welcomeFragment = new WelcomeFragment();
-		fragmentTransaction.replace(R.id.content_frame, welcomeFragment);
-		fragmentTransaction.commit();
-		Log.d(TAG, PreferencesUtils.getStepLength(this));
+		setContentFragment(new WelcomeFragment());
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		prefs.edit().putBoolean(Constants.PREF_IS_TRAINING_RUN_KEY, false).commit();
 	}
 
 	private void initControls() {
@@ -175,19 +173,13 @@ public class MainActivity extends Activity {
 	}
 
 	private void selectItem(int position) {
-
-		
-
 		drawerList.setItemChecked(position, true);
 		drawerLayout.closeDrawer(drawerList);
 		getActionBar().setTitle(dataList.get(position).getItemName());
 		String item = dataList.get(position).getItemName();
 
-		if (item.equals(getString(R.string.running))) {
-			fragmentTransaction = getFragmentManager().beginTransaction();
-			RunFragment runFragment = new RunFragment();
-			fragmentTransaction.replace(R.id.content_frame, runFragment);
-			fragmentTransaction.commit();
+		if (item.equals(getString(R.string.walking))) {
+			setContentFragment(new WalkingFragment());
 		} else if (item.equals(getString(R.string.settings))) {
 			Intent preferencesActivityIntent = new Intent(this,
 					PrefsActivity.class);
@@ -195,16 +187,22 @@ public class MainActivity extends Activity {
 		} else if (item.equals(getString(R.string.quit))) {
 			this.finish();
 		} else {
-			fragmentTransaction = getFragmentManager().beginTransaction();
-			WelcomeFragment welcomeFragment = new WelcomeFragment();
-			fragmentTransaction.replace(R.id.content_frame, welcomeFragment);
-			fragmentTransaction.commit();
-
+			setContentFragment(new WelcomeFragment());
 		}
+	}
+	
+	private void setContentFragment(Fragment contentFragment) {
+		fragmentTransaction = getFragmentManager().beginTransaction();
+		fragmentTransaction.replace(R.id.content_frame, contentFragment);
+		fragmentTransaction.commit();
 	}
 
 	@Override
 	public void onBackPressed() {
+		showExitDialog();
+	}
+
+	private void showExitDialog() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(getString(R.string.exit));
 		builder.setMessage(getString(R.string.sure_exit));
@@ -232,16 +230,13 @@ public class MainActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (drawerToggle.onOptionsItemSelected(item))
-			return true;
+		if (drawerToggle.onOptionsItemSelected(item)) return true;
 		return false;
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (resultCode == RESULT_OK) {
-			this.finish();
-		}
+		if (resultCode == RESULT_OK) this.finish();
 	}
 
 }

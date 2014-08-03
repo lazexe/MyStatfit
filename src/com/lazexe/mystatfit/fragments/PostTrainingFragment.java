@@ -1,6 +1,5 @@
 package com.lazexe.mystatfit.fragments;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import android.app.AlertDialog;
@@ -57,7 +56,6 @@ public class PostTrainingFragment extends Fragment implements OnClickListener  {
 	private Button acceptButton;
 	private Button cancelButton;
 	
-	private PostTrainingFragment thisFragment;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,7 +66,6 @@ public class PostTrainingFragment extends Fragment implements OnClickListener  {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		thisFragment = this;
 		sentimentRating = (RatingBar) view.findViewById(R.id.sentiment_ratingbar);
 		pulseEditText = (EditText) view.findViewById(R.id.pulse_edittext);
 		weatherSpinner = (Spinner) view.findViewById(R.id.weather_spinner);
@@ -181,26 +178,5 @@ public class PostTrainingFragment extends Fragment implements OnClickListener  {
 		builder.setCancelable(false);
 		AlertDialog dialog = builder.create();
 		dialog.show();
-	}
-	
-	private boolean checkFragmentFields() {
-		
-		if (isFieldEmpty(pulseEditText))
-			return false;
-		if (isFieldEmpty(coverEditText))
-			return false;
-		if (isFieldEmpty(temperatureEditText))
-			return false;
-		
-		return true;
-	}
-	
-	private boolean isFieldEmpty(EditText field) {
-		if (field.getText().toString().isEmpty()) {
-			field.setError(getActivity().getString(R.string.error_empty_field));
-			field.requestFocus();
-			return true;
-		}
-		return false;
 	}
 }

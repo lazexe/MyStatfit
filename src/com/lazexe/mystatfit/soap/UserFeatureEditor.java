@@ -3,17 +3,12 @@ package com.lazexe.mystatfit.soap;
 import org.ksoap2.SoapFault;
 import org.ksoap2.serialization.SoapObject;
 
-import com.lazexe.mystatfit.MainActivity;
-import com.lazexe.mystatfit.R;
-import com.lazexe.mystatfit.utils.Constants;
-import com.lazexe.mystatfit.utils.SoapUtils;
-
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.widget.Toast;
+
+import com.lazexe.mystatfit.R;
+import com.lazexe.mystatfit.utils.SoapUtils;
 
 public class UserFeatureEditor extends AbstractCommandObject implements SoapExecutableInterface {
 

@@ -62,19 +62,15 @@ public class EditUserInformationActivity extends Activity implements
 
 	private boolean checkFields() {
 		boolean isCorrect = true;
-
 		// TODO
-
 		return isCorrect;
 	}
 
 	@Override
 	public void onFocusChange(View view, boolean hasFocus) {
-		if (hasFocus) {
-			if (view.getId() == R.id.edit_birthday) {
+		if (hasFocus)
+			if (view.getId() == R.id.edit_birthday)
 				handleBirthEditText();
-			}
-		}
 	}
 
 	private void handleBirthEditText() {

@@ -17,7 +17,10 @@ public class LicenceAgreementActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_licence);
+		initControls();
+	}
 
+	private void initControls() {
 		agreeButton = (Button) findViewById(R.id.licence_agree_button);
 		agreeButton.setOnClickListener(this);
 		disagreeButton = (Button) findViewById(R.id.licence_disagree_button);
@@ -32,9 +35,8 @@ public class LicenceAgreementActivity extends Activity implements
 					RegistrationActivity.class);
 			startActivity(registrationActivityIntent);
 		}
-		if (view.getId() == R.id.licence_disagree_button) {
+		if (view.getId() == R.id.licence_disagree_button)
 			this.finish();
-		}
 	}
 
 }

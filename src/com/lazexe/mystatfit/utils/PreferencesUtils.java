@@ -1,11 +1,10 @@
 package com.lazexe.mystatfit.utils;
 
-import com.lazexe.mystatfit.R;
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import com.lazexe.mystatfit.R;
 
 public class PreferencesUtils {
 

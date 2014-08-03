@@ -52,10 +52,8 @@ public class RegistrationActivity extends Activity implements OnClickListener,
 		if (view.getId() == R.id.button_register) {
 			if (!isEmailCorrect())
 				return;
-
 			if (!isPasswordCorrect())
 				return;
-
 			SoapParams params = new SoapParams(Registrator.SOAP_ACTION,
 					Registrator.METHOD_NAME, Registrator.NAMESPACE,
 					Registrator.URL);
@@ -70,28 +68,24 @@ public class RegistrationActivity extends Activity implements OnClickListener,
 		Pattern pattern = Pattern
 				.compile("[a-zA-Z]{1}[a-zA-Z\\d\\u002E\\u005F]+@([a-zA-Z]+\\u002E){1,2}((net)|(com)|(org)|(ru))");
 		String email = emailEditText.getText().toString();
-
 		if (!email.contains("@")) {
 			isCorrect = false;
 			emailEditText.setError(getString(R.string.error_dog));
 			emailEditText.requestFocus();
 			return isCorrect;
 		}
-
 		if (email.contains(" ")) {
 			isCorrect = false;
 			emailEditText.setError(getString(R.string.error_whitespace));
 			emailEditText.requestFocus();
 			return isCorrect;
 		}
-
 		if (email.length() < 6) {
 			isCorrect = false;
 			emailEditText.setError(getString(R.string.error_length));
 			emailEditText.requestFocus();
 			return isCorrect;
 		}
-
 		Matcher matcher = pattern.matcher(email);
 		if (!matcher.matches()) {
 			isCorrect = false;
@@ -99,16 +93,13 @@ public class RegistrationActivity extends Activity implements OnClickListener,
 			emailEditText.requestFocus();
 			return isCorrect;
 		}
-
 		return isCorrect;
 	}
 
 	private boolean isPasswordCorrect() {
 		boolean isCorrect = true;
-
 		String password = passwordEditText.getText().toString();
 		String confirmedPassword = confirmPasswordEditText.getText().toString();
-
 		if (password.length() < 4) {
 			isCorrect = false;
 			passwordEditText
@@ -116,7 +107,6 @@ public class RegistrationActivity extends Activity implements OnClickListener,
 			passwordEditText.requestFocus();
 			return isCorrect;
 		}
-
 		if (!password.equals(confirmedPassword)) {
 			isCorrect = true;
 			confirmPasswordEditText
@@ -124,15 +114,13 @@ public class RegistrationActivity extends Activity implements OnClickListener,
 			confirmPasswordEditText.requestFocus();
 			return isCorrect;
 		}
-
 		return isCorrect;
 	}
 
 	@Override
 	public void onBackPressed() {
 		this.finish();
-		Intent licenteActivityIntent = new Intent(this,
-				LicenceAgreementActivity.class);
+		Intent licenteActivityIntent = new Intent(this,LicenceAgreementActivity.class);
 		startActivity(licenteActivityIntent);
 	}
 
@@ -151,10 +139,8 @@ public class RegistrationActivity extends Activity implements OnClickListener,
 		passwordEditText.setEnabled(state);
 		confirmPasswordEditText.setEnabled(state);
 		registrationButton.setEnabled(state);
-		if (state)
-			progressBar.setVisibility(View.INVISIBLE);
-		else
-			progressBar.setVisibility(View.INVISIBLE);
+		if (state) progressBar.setVisibility(View.INVISIBLE);
+		else progressBar.setVisibility(View.INVISIBLE);
 	}
 
 }
