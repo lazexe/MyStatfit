@@ -108,16 +108,13 @@ public class PostTrainingFragment extends Fragment implements OnClickListener  {
 	}
 	
 	private void accept() {
-		if (checkFragmentFields()) {
-			if (NetworkUtils.isOnline(getActivity()))
-				saveToRemoteBase();
-			else
-				saveToLocalBase();
-			FragmentManager fragmentManager = getActivity().getFragmentManager();
-			WelcomeFragment welcomeFragment = new WelcomeFragment();
-			fragmentManager.beginTransaction().replace(R.id.content_frame, welcomeFragment).commit();
-		}
-			
+		if (NetworkUtils.isOnline(getActivity()))
+			saveToRemoteBase();
+		else
+			saveToLocalBase();
+		FragmentManager fragmentManager = getActivity().getFragmentManager();
+		WelcomeFragment welcomeFragment = new WelcomeFragment();
+		fragmentManager.beginTransaction().replace(R.id.content_frame, welcomeFragment).commit();
 	}
 		
 	private void saveToRemoteBase() {

@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -24,6 +25,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lazexe.mystatfit.R;
 import com.lazexe.mystatfit.step.StepCounterService;
@@ -111,8 +113,13 @@ public class RunFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onClick(View view) {
 		int id = view.getId();
+		ImageButton clickdButton = null;
+		if (view instanceof ImageButton) {
+			clickdButton = (ImageButton) view;
+		}
 		switch (id) {
 		case R.id.start_count_steps_button:
+			lockScreenFromTouch();
 			startCountSteps();
 			SharedPreferences prefs =PreferenceManager.getDefaultSharedPreferences(getActivity());
 			prefs.edit().putBoolean(Constants.PREF_IS_TRAINING_RUN_KEY, true).commit();
@@ -137,6 +144,7 @@ public class RunFragment extends Fragment implements OnClickListener {
 		getActivity().bindService(startIntent, stepServiceConnection,
 				Context.BIND_AUTO_CREATE);
 		timer = new Timer();
+		task = createTimerTask();
 		timer.schedule(task, 1000, 1000);
 		Calendar calendar = Calendar.getInstance();
 		startDateInMills = calendar.getTimeInMillis();
@@ -176,6 +184,70 @@ public class RunFragment extends Fragment implements OnClickListener {
 				.replace(R.id.content_frame, postFragment).commit();
 		Calendar calendar = Calendar.getInstance();
 		endDateInMills = calendar.getTimeInMillis();
+	}
+	
+	private TimerTask createTimerTask() {
+		TimerTask task = new TimerTask() {
+
+			@Override
+			public void run() {
+				getActivity().runOnUiThread(new Runnable() {
+
+					float elapsedTimeInSeconds = 0;
+
+					@Override
+					public void run() {
+						durationSeconds++;
+						if (durationSeconds == 60) {
+							durationSeconds = 0;
+							durationMinutes++;
+						}
+						if (durationMinutes == 60) {
+							durationMinutes = 0;
+							durationHours++;
+						}
+
+						if (steps > 0) {
+							distance = steps * stepLength / 100;
+							elapsedTimeInSeconds = durationHours * 3600
+									+ durationMinutes * 60 + durationSeconds;
+							speed = distance / elapsedTimeInSeconds;
+							Log.d(TAG, "Steps" + String.valueOf(steps));
+							Log.d(TAG, "Step length " + String.valueOf(stepLength));
+							Log.d(TAG, "Distance " + String.valueOf(distance));
+							Log.d(TAG,
+									"Elapsed time "
+											+ String.valueOf(elapsedTimeInSeconds));
+							Log.d(TAG, "Speed " + String.valueOf(speed));
+							// speed = (int) ((((hours / 3600) + (minutes / 60) +
+							// seconds) / steps) * 60);
+						}
+
+						Log.d(TAG, "Weight " + String.valueOf(weight));
+						Log.d(TAG, "Height " + String.valueOf(height));
+						Log.d(TAG, "Age " + String.valueOf(age));
+						Log.d(TAG, "Coef" + String.valueOf(ACTIVITY_COEFFICIENT));
+						// Women
+						if (gender == 0) {
+							calories += (int) (((((655 + (9.6 * weight)
+									+ (1.8 * height) - (4.7 * age)) * ACTIVITY_COEFFICIENT) / 24) / 3600) * (durationSeconds));
+						}/* men */else {
+							calories += (int) (((((66 + (13.7 * weight)
+									+ (5 * height) - (6.8 * age)) * ACTIVITY_COEFFICIENT) / 24) / 3600) * (durationSeconds));
+						}
+						
+						Log.d(TAG, "Calories: " + calories);
+						stepsTextView.setText(String.valueOf(steps));
+						caloriesTextView.setText(String.valueOf(calories));
+						speedTextView.setText(String.valueOf(speed));
+						timeTextView.setText(String.valueOf(durationHours) + " : "
+								+ String.valueOf(durationMinutes) + " : "
+								+ String.valueOf(durationSeconds));
+					}
+				});
+			}
+		};
+		return task;
 	}
 
 	private TimerTask task = new TimerTask() {
