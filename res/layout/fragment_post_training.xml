@@ -68,11 +68,11 @@
         android:text="Cover"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <EditText
-        android:id="@+id/cover_edittext"
+    <Spinner
+        android:id="@+id/cover_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10" />
+        android:entries="@array/cover_type"/>
 
     <LinearLayout
         android:layout_width="match_parent"

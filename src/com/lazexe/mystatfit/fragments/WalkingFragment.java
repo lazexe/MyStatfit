@@ -1,7 +1,6 @@
 package com.lazexe.mystatfit.fragments;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -12,7 +11,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -29,7 +27,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lazexe.mystatfit.R;
-import com.lazexe.mystatfit.database.TrainingDatabase;
 import com.lazexe.mystatfit.step.StepCounterService;
 import com.lazexe.mystatfit.utils.Constants;
 import com.lazexe.mystatfit.utils.PreferencesUtils;
@@ -135,10 +132,11 @@ public class WalkingFragment extends Fragment implements OnClickListener {
 		case R.id.start_walking_training_button:
 			startTrainingButton.setVisibility(View.INVISIBLE);
 			setControlsButtonsVisibility(View.VISIBLE);
-			start(clickedButton);
+			start();
 			break;
 		case R.id.start_count_steps_button:
-			start(clickedButton);
+			//start();
+			Toast.makeText(getActivity(), "TODO", Toast.LENGTH_LONG).show();
 			break;
 		case R.id.lock_count_steps_button:
 			lockScreenFromTouch();
@@ -152,28 +150,12 @@ public class WalkingFragment extends Fragment implements OnClickListener {
 		}
 	}
 
-	private void start(ImageButton clickedButton) {
-		String contentdescription = (String) clickedButton
-				.getContentDescription();
-		if (contentdescription.equals(getActivity().getString(R.string.play))) {
-			paused = false;
-			clickedButton.setImageDrawable(getActivity().getResources()
-					.getDrawable(android.R.drawable.ic_media_pause));
-			clickedButton.setContentDescription(getActivity().getString(
-					R.string.pause));
-			lockScreenFromTouch();
-			startCountSteps();
-			SharedPreferences prefs = PreferenceManager
-					.getDefaultSharedPreferences(getActivity());
-			prefs.edit().putBoolean(Constants.PREF_IS_TRAINING_RUN_KEY, true)
-					.commit();
-		} else {
-			paused = true;
-			clickedButton.setImageDrawable(getActivity().getResources()
-					.getDrawable(android.R.drawable.ic_media_play));
-			clickedButton.setContentDescription(getActivity().getString(
-					R.string.play));
-		}
+	private void start() {
+		startCountSteps();
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(getActivity());
+		prefs.edit().putBoolean(Constants.PREF_IS_TRAINING_RUN_KEY, true)
+				.commit();
 	}
 
 	private void setControlsButtonsVisibility(int visibility) {

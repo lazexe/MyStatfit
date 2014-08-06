@@ -51,7 +51,7 @@ public class PostTrainingFragment extends Fragment implements OnClickListener  {
 	private EditText pulseEditText;
 	private Spinner weatherSpinner;
 	private EditText temperatureEditText;
-	private EditText coverEditText;
+	private Spinner coverSpinner;
 	
 	private Button acceptButton;
 	private Button cancelButton;
@@ -71,7 +71,7 @@ public class PostTrainingFragment extends Fragment implements OnClickListener  {
 		weatherSpinner = (Spinner) view.findViewById(R.id.weather_spinner);
 		acceptButton = (Button) view.findViewById(R.id.accept_post_training_button);
 		cancelButton = (Button) view.findViewById(R.id.cancel_post_training_button);
-		coverEditText = (EditText) view.findViewById(R.id.cover_edittext);
+		coverSpinner = (Spinner) view.findViewById(R.id.cover_spinner);
 		temperatureEditText = (EditText) view.findViewById(R.id.temperature_edittext);
 		
 		acceptButton.setOnClickListener(this);
@@ -94,7 +94,6 @@ public class PostTrainingFragment extends Fragment implements OnClickListener  {
 		switch (id) {
 		case R.id.accept_post_training_button:
 			accept();
-			
 			break;
 		case R.id.cancel_post_training_button:
 			showConfirmDialog();
@@ -145,7 +144,7 @@ public class PostTrainingFragment extends Fragment implements OnClickListener  {
 			values.put(TrainingDatabase.runTableFields[18], distance);
 			values.put(TrainingDatabase.runTableFields[19], pulseEditText.getText().toString());
 			values.put(TrainingDatabase.runTableFields[20], calories);
-			values.put(TrainingDatabase.runTableFields[21], coverEditText.getText().toString());
+			values.put(TrainingDatabase.runTableFields[21], coverSpinner.getSelectedItem().toString());
 			values.put(TrainingDatabase.runTableFields[22], sentimentRating.getRating());
 			values.put(TrainingDatabase.runTableFields[23], temperatureEditText.getText().toString());
 			values.put(TrainingDatabase.runTableFields[24], weatherSpinner.getSelectedItem().toString());
