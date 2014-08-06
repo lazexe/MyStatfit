@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.lazexe.mystatfit.R;
 import com.lazexe.mystatfit.step.StepCounterService;
 import com.lazexe.mystatfit.utils.Constants;
+import com.lazexe.mystatfit.utils.MathUtils;
 import com.lazexe.mystatfit.utils.PreferencesUtils;
 
 public class WalkingFragment extends Fragment implements OnClickListener {
@@ -251,7 +252,9 @@ public class WalkingFragment extends Fragment implements OnClickListener {
 
 						stepsTextView.setText(String.valueOf(steps));
 						caloriesTextView.setText(String.valueOf(calories));
-						speedTextView.setText(String.valueOf(speed));
+						speedTextView.setText(String.valueOf(MathUtils.round(speed, 2)));
+						Log.d(TAG, "Speed: " + String.valueOf(speed));
+						Log.d(TAG, "Rounded speed: " + String.valueOf(MathUtils.round(speed, 2)));
 						timeTextView.setText(String.valueOf(durationHours)
 								+ " : " + String.valueOf(durationMinutes)
 								+ " : " + String.valueOf(durationSeconds));
