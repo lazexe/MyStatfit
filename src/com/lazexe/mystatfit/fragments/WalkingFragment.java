@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.lazexe.mystatfit.R;
 import com.lazexe.mystatfit.step.StepCounterService;
 import com.lazexe.mystatfit.utils.Constants;
+import com.lazexe.mystatfit.utils.CustomTime;
 import com.lazexe.mystatfit.utils.MathUtils;
 import com.lazexe.mystatfit.utils.PreferencesUtils;
 
@@ -215,10 +216,12 @@ public class WalkingFragment extends Fragment implements OnClickListener {
 	private TimerTask createTimerTask() {
 		TimerTask task = new TimerTask() {
 
+			private CustomTime customTime;
+			
 			@Override
 			public void run() {
 				getActivity().runOnUiThread(new Runnable() {
-
+					
 					float elapsedTimeInSeconds = 0;
 
 					@Override
@@ -255,9 +258,8 @@ public class WalkingFragment extends Fragment implements OnClickListener {
 						speedTextView.setText(String.valueOf(MathUtils.round(speed, 2)));
 						Log.d(TAG, "Speed: " + String.valueOf(speed));
 						Log.d(TAG, "Rounded speed: " + String.valueOf(MathUtils.round(speed, 2)));
-						timeTextView.setText(String.valueOf(durationHours)
-								+ " : " + String.valueOf(durationMinutes)
-								+ " : " + String.valueOf(durationSeconds));
+						customTime = new CustomTime(durationHours, durationMinutes, durationSeconds);
+						timeTextView.setText(customTime.toString());
 					}
 				});
 			}

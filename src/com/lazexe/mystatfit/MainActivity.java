@@ -177,7 +177,6 @@ public class MainActivity extends Activity {
 		drawerLayout.closeDrawer(drawerList);
 		getActionBar().setTitle(dataList.get(position).getItemName());
 		String item = dataList.get(position).getItemName();
-
 		if (item.equals(getString(R.string.walking))) {
 			setContentFragment(new WalkingFragment());
 		} else if (item.equals(getString(R.string.settings))) {
